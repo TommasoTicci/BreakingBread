@@ -57,7 +57,7 @@ public class PaymentMethod {
         System.out.println("Payment in progress. Please wait.");
         System.out.println("Enter your credit card CVV");
 
-        String cVV = scanner.nextLine();
+        String cVV;
 
         do {
             cVV = scanner.nextLine();
