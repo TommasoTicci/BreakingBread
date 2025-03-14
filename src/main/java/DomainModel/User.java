@@ -1,5 +1,7 @@
 package main.java.DomainModel;
 
+import java.util.ArrayList;
+
 public class User {
     private int id;
     private String name;
@@ -9,8 +11,9 @@ public class User {
     private String email;
     private String password;
     private PaymentMethod paymentMethod;
-    private String[]cart;
+    private ArrayList<String> cart;
 
+    //CONSTRUCTORS
     public User() {}
 
     public User(String name, String surname, int age, String email, String password, PaymentMethod paymentMethod) {
@@ -39,7 +42,7 @@ public class User {
         this.password = password;
     }
 
-    //GETTER
+    //GETTERS
     public int getId() {return id;}
     public String getName() {return name;}
     public String getSurname() {return surname;}
@@ -55,9 +58,9 @@ public class User {
             return null;
         }
     }
-    public String[] getCart() {return cart;}
+    public  ArrayList<String> getCart() {return cart;}
 
-    //SETTER
+    //SETTERS
     public void setId(int id) {this.id = id;}
     public void setName(String name) {this.name = name;}
     public void setSurname(String surname) {this.surname = surname;}
@@ -69,7 +72,7 @@ public class User {
     public void setPaymentMethod(String cardNumber,String cardExpiryDate,String cardCVV) {
         this.paymentMethod = new PaymentMethod(name,surname,cardNumber,cardExpiryDate,cardCVV);
     }
-    public void setCart(String[] cart) {this.cart = cart;}
+    public void setCart(ArrayList<String> cart) {this.cart = cart;}
 }
 
 

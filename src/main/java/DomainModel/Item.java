@@ -6,10 +6,8 @@ public class Item {
     private float price;
     private int discountPercentage;
 
-    //Default constructor
+    //CONSTRUCTORS
     public Item() {};
-
-    //Constructor
     public Item(int itemId, String name, String description, String type, float price, int discountPercentage) {
         this.itemId = itemId;
         this.name = name;
@@ -19,7 +17,7 @@ public class Item {
         this.discountPercentage = discountPercentage;
     }
 
-    //Getters
+    //GETTERS
     public int getItemId() { return itemId; }
     public String getName() { return name; }
     public String getDescription() { return description; }
@@ -27,7 +25,7 @@ public class Item {
     public float getPrice() { return price; }
     public int getDiscountPercentage() { return discountPercentage; }
 
-    //Setters
+    //SETTERS
     public void setItemId(int itemId) { this.itemId = itemId; }
     public void setName(String name) { this.name = name; }
     public void setDescription(String description) { this.description = description; }
