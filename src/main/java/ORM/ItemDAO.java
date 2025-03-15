@@ -1,0 +1,185 @@
+package main.java.ORM;
+
+import main.java.DomainModel.Item;
+
+import java.sql.*;
+import java.util.ArrayList;
+
+public class ItemDAO {
+
+    private Connection con;
+
+    public ItemDAO() {
+        try{
+            this.con = ConnectionManager.getInstance().getConnection();
+        }
+        catch(SQLException | ClassNotFoundException e){
+            System.err.println("Error: " + e.getMessage());
+        }
+    }
+
+    public void addItem(String name, String description, String type, float price, int discount) throws SQLException, ClassNotFoundException {
+        PreparedStatement pStatement = null;
+
+        String sqlStatement = String.format("INSERT INTO Items (name, description, type, price, discount) " +
+                "VALUES ('%s', '%s', '%s', %f, %d)", name, description, type, price, discount );
+
+        try {
+            pStatement = con.prepareStatement(sqlStatement);
+            pStatement.executeUpdate();
+            System.out.println("Item added successfully.");
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        } finally {
+            if (pStatement != null)
+                pStatement.close();
+        }
+    }
+
+    public void removeItem(int id) throws SQLException, ClassNotFoundException {
+        PreparedStatement pStatement = null;
+
+        String sqlStatement = String.format("REMOVE FROM Items WHERE id = %d", id);
+
+        try {
+            pStatement = con.prepareStatement(sqlStatement);
+            pStatement.executeUpdate();
+            System.out.println("Item removed successfully.");
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        } finally {
+            if (pStatement != null)
+                pStatement.close();
+        }
+    }
+
+    public Item getItem(int id) throws SQLException, ClassNotFoundException {
+        PreparedStatement pStatement = null;
+        ResultSet resultSet = null;
+        Item item = null;
+
+        try {
+            String sqlStatement = String.format("SELECT * FROM Items WHERE id = %d", id);
+            pStatement = con.prepareStatement(sqlStatement);
+            resultSet = pStatement.executeQuery();
+
+            if (resultSet.next()) {
+                String name = resultSet.getString("name");
+                String description = resultSet.getString("description");
+                String type = resultSet.getString("type");
+                float price = resultSet.getFloat("price");
+                int discount = resultSet.getInt("discount");
+
+                item = new Item(id, name, description, type, price, discount);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        } finally {
+            if (resultSet != null) resultSet.close();
+            if (pStatement != null) pStatement.close();
+        }
+
+        return item;
+    }
+
+    public ArrayList<Item> getAllItems() throws SQLException, ClassNotFoundException {
+        ArrayList<Item> items = new ArrayList<Item>();
+
+        String sqlStatement = String.format("SELECT * FROM Item");
+
+        PreparedStatement pStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            pStatement = con.prepareStatement(sqlStatement);
+            resultSet = pStatement.executeQuery();
+            while (resultSet.next()) {
+                Item item = new Item(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("description"), resultSet.getString("type"), resultSet.getFloat("price"), resultSet.getInt("discount"));
+                items.add(item);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        } finally {
+            if (pStatement != null) { pStatement.close(); }
+            if (resultSet != null) { resultSet.close(); }
+        }
+
+        return items;
+    }
+
+    public ArrayList<Item> getAllDiscountedItems() throws SQLException, ClassNotFoundException {
+        ArrayList<Item> ditems = new ArrayList<Item>();
+
+        String sqlStatement = String.format("SELECT * FROM Item WHERE discount > %d", 0);
+
+        PreparedStatement pStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            pStatement = con.prepareStatement(sqlStatement);
+            resultSet = pStatement.executeQuery();
+            while (resultSet.next()) {
+                Item item = new Item(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("description"), resultSet.getString("type"), resultSet.getFloat("price"), resultSet.getInt("discount"));
+                ditems.add(item);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        } finally {
+            if (pStatement != null) { pStatement.close(); }
+            if (resultSet != null) { resultSet.close(); }
+        }
+
+        return ditems;
+    }
+
+    public void updateDiscount(int id, int discount) throws SQLException, ClassNotFoundException {
+        PreparedStatement pStatement = null;
+
+        String sqlStatement = String.format("UPDATE Item SET discount = %d WHERE id = %d", discount, id);
+
+        try {
+            pStatement = con.prepareStatement(sqlStatement);
+            pStatement.executeUpdate();
+            System.out.println("Item (discount) updated successfully.");
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        } finally {
+            if (pStatement != null)
+                pStatement.close();
+        }
+    }
+
+    public void updatePrice(int id, float price) throws SQLException, ClassNotFoundException {
+        PreparedStatement pStatement = null;
+
+        String sqlStatement = String.format("UPDATE Item SET price = %f WHERE id = %d", price, id);
+
+        try {
+            pStatement = con.prepareStatement(sqlStatement);
+            pStatement.executeUpdate();
+            System.out.println("Item (price) updated successfully.");
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        } finally {
+            if (pStatement != null)
+                pStatement.close();
+        }
+    }
+
+    public void updateDescription(int id, String description) throws SQLException, ClassNotFoundException {
+        PreparedStatement pStatement = null;
+
+        String sqlStatement = String.format("UPDATE Item SET description = %s WHERE id = %d", description, id);
+
+        try {
+            pStatement = con.prepareStatement(sqlStatement);
+            pStatement.executeUpdate();
+            System.out.println("Item (description) updated successfully.");
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        } finally {
+            if (pStatement != null)
+                pStatement.close();
+        }
+    }
+}

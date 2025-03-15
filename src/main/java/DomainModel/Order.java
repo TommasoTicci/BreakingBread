@@ -10,7 +10,13 @@ public class Order {
     ArrayList<Item>  items;
 
     //CONSTRUCTORS
-    public Order(int orderId, User user, ArrayList<Item> items, String status, String date) {}
+    public Order(int orderId, User user, ArrayList<Item> items, String status, String date) {
+        this.orderId = orderId;
+        this.user = user;
+        this.items = items;
+        this.status = status;
+        this.date = date;
+    }
 
     //GETTERS
     public int getOrderId() { return orderId; }
