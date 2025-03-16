@@ -304,6 +304,51 @@ public class UserDAO {
         return users;
     }
 
+    public User getUser(int id) throws SQLException {
+        String sql = "SELECT * FROM Users WHERE id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    // Estrai i dettagli dell'utente
+                    String name = resultSet.getString("name");
+                    String surname = resultSet.getString("surname");
+                    String userUsername = resultSet.getString("username");
+                    int age = resultSet.getInt("age");
+                    String sex = resultSet.getString("sex");
+                    String email = resultSet.getString("email");
+                    String password = resultSet.getString("password");
+                    String paymentMethod = resultSet.getString("paymentMethod");
+
+                    // Se il paymentMethod è nullo, usa il primo costruttore
+                    if (paymentMethod == null) {
+                        return new User(id, name, surname, userUsername, age, sex, email, password);
+                    } else {
+                        // Caso in cui il paymentMethod non è nullo, recupera i dettagli dal PaymentMethod
+                        String paymentSql = "SELECT * FROM PaymentMethod WHERE cardNumber = ?";
+                        try (PreparedStatement paymentStatement = connection.prepareStatement(paymentSql)) {
+                            paymentStatement.setString(1, paymentMethod);
+                            try (ResultSet paymentResultSet = paymentStatement.executeQuery()) {
+                                if (paymentResultSet.next()) {
+                                    String cardNumber = paymentResultSet.getString("cardNumber");
+                                    String cardExpiryDate = paymentResultSet.getString("expirationDate");
+                                    String cardCVV = paymentResultSet.getString("cvv");
+
+                                    // Crea l'oggetto User con il secondo costruttore che include PaymentMethod
+                                    return new User(id, name, surname, userUsername, age, email, password, cardNumber, cardExpiryDate, cardCVV);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // Se l'utente non viene trovato, restituisci null
+        return null;
+    }
+
     public User getUser(String username) throws SQLException {
         String sql = "SELECT * FROM Users WHERE username = ?";
 

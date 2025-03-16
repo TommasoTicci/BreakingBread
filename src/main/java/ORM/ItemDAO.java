@@ -21,11 +21,16 @@ public class ItemDAO {
     public void addItem(String name, String description, String type, float price, int discount) throws SQLException, ClassNotFoundException {
         PreparedStatement pStatement = null;
 
-        String sqlStatement = String.format("INSERT INTO Items (name, description, type, price, discount) " +
-                "VALUES ('%s', '%s', '%s', %f, %d)", name, description, type, price, discount );
+        String sqlStatement = "INSERT INTO Item (name, description, type, price, discount) VALUES (?, ?, ?, ?, ?)";
 
         try {
             pStatement = con.prepareStatement(sqlStatement);
+            pStatement = con.prepareStatement(sqlStatement);
+            pStatement.setString(1, name);
+            pStatement.setString(2, description);
+            pStatement.setString(3, type);
+            pStatement.setFloat(4, price);
+            pStatement.setInt(5, discount);
             pStatement.executeUpdate();
             System.out.println("Item added successfully.");
         } catch (SQLException e) {
@@ -39,10 +44,11 @@ public class ItemDAO {
     public void removeItem(int id) throws SQLException, ClassNotFoundException {
         PreparedStatement pStatement = null;
 
-        String sqlStatement = String.format("REMOVE FROM Items WHERE id = %d", id);
+        String sqlStatement = "DELETE FROM Item WHERE id = ?";
 
         try {
             pStatement = con.prepareStatement(sqlStatement);
+            pStatement.setInt(1, id);
             pStatement.executeUpdate();
             System.out.println("Item removed successfully.");
         } catch (SQLException e) {
@@ -59,7 +65,7 @@ public class ItemDAO {
         Item item = null;
 
         try {
-            String sqlStatement = String.format("SELECT * FROM Items WHERE id = %d", id);
+            String sqlStatement = String.format("SELECT * FROM Item WHERE id = %d", id);
             pStatement = con.prepareStatement(sqlStatement);
             resultSet = pStatement.executeQuery();
 

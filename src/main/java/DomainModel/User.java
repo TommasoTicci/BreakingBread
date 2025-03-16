@@ -12,7 +12,7 @@ public class User {
     private String email;
     private String password;
     private PaymentMethod paymentMethod;
-    private ArrayList<String> cart;
+    private ArrayList<Integer> cart;
 
     //CONSTRUCTORS
     public User() {}
@@ -87,7 +87,7 @@ public class User {
             return null;
         }
     }
-    public  ArrayList<String> getCart() {return cart;}
+    public  ArrayList<Integer> getCart() {return cart;}
 
     //SETTERS
     public void setId(int id) {this.id = id;}
@@ -102,7 +102,7 @@ public class User {
     public void setPaymentMethod(String cardNumber,String cardExpiryDate,String cardCVV) {
         this.paymentMethod = new PaymentMethod(name,surname,cardNumber,cardExpiryDate,cardCVV);
     }
-    public void setCart(ArrayList<String> cart) {this.cart = cart;}
+    public void setCart(ArrayList<Integer> cart) {this.cart = cart;}
 }
 
 

@@ -2,6 +2,8 @@ package main.java.ORM;
 
 import main.java.DomainModel.Item;
 import main.java.DomainModel.Order;
+import main.java.DomainModel.OrderFactory;
+import main.java.DomainModel.User;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -49,6 +51,30 @@ public class OrderDAO {
             for (Item item : items) {
                 pStatement.setInt(1, orderId);
                 pStatement.setInt(2, item.getItemId());
+                pStatement.addBatch();
+            }
+
+            pStatement.executeBatch();
+            System.out.println("Items inserted successfully to Order.");
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        } finally {
+            if (pStatement != null)
+                pStatement.close();
+        }
+    }
+
+    public void createOrderItemFromIds(int orderId, ArrayList<Integer> itemsId) throws SQLException, ClassNotFoundException {
+        PreparedStatement pStatement = null;
+
+        String insertStatement = String.format("INSERT INTO OrdersItem (orderid, itemid) VALUES (?, ?)");
+
+        try {
+            pStatement = con.prepareStatement(insertStatement);
+
+            for (Integer itemId : itemsId) {
+                pStatement.setInt(1, orderId);
+                pStatement.setInt(2, itemId);
                 pStatement.addBatch();
             }
 
@@ -213,11 +239,6 @@ public class OrderDAO {
         }
     }
 
-    //TODO: NECESSITO DELLO USERDAO E ITEMDAO
-
-    /*
-    //BOZZA: DA MODIFICARE (ovviamente)
-
     public Order getOrder(int orderId) throws SQLException, ClassNotFoundException {
         PreparedStatement orderStatement = null;
         PreparedStatement itemsStatement = null;
@@ -237,6 +258,8 @@ public class OrderDAO {
                 String status = orderResult.getString("status");
                 String date = orderResult.getDate("date").toString();
 
+                User user = new UserDAO().getUser(userId);
+
                 // 2. Recupero gli item associati all'ordine
                 String itemsSQL = String.format("SELECT itemid FROM OrdersItem WHERE orderid = %d", orderId);
                 itemsStatement = con.prepareStatement(itemsSQL);
@@ -244,11 +267,11 @@ public class OrderDAO {
 
                 while (itemsResult.next()) {
                     int itemId = itemsResult.getInt("itemid");
-                    items.add(new Item(itemId)); // Supponendo che Item abbia un costruttore che accetta solo itemId
+                    items.add(new ItemDAO().getItem(itemId));
                 }
 
                 // 3. Creazione dell'oggetto Order con la lista di item
-                order = new Order(orderId, userId, items, status, date);
+                order = OrderFactory.createOrder(orderId, user, items, status, date);
             }
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
@@ -259,9 +282,154 @@ public class OrderDAO {
             if (itemsStatement != null) itemsStatement.close();
         }
 
-        return order; // Se l'ordine non esiste, restituisce null
+        return order;
     }
-    */
 
+    public ArrayList<Order> getOrdersByUser(int userId) throws SQLException, ClassNotFoundException {
+        PreparedStatement orderStatement = null;
+        PreparedStatement itemsStatement = null;
+        ResultSet orderResult = null;
+        ResultSet itemsResult = null;
+        ArrayList<Order> orders = new ArrayList<>();
+
+        try {
+            // Recupero i dettagli dell'ordine
+            String orderSQL = String.format("SELECT * FROM Orders WHERE userid = %d", userId);
+            orderStatement = con.prepareStatement(orderSQL);
+            orderResult = orderStatement.executeQuery();
+
+            while (orderResult.next()) {
+                ArrayList<Item> items = new ArrayList<>();
+                int orderId = orderResult.getInt("id");
+                String status = orderResult.getString("status");
+                String date = orderResult.getDate("date").toString();
+
+                User user = new UserDAO().getUser(userId);
+
+                // 2. Recupero gli item associati all'ordine
+                String itemsSQL = String.format("SELECT itemid FROM OrdersItem WHERE orderid = %d", orderId);
+                itemsStatement = con.prepareStatement(itemsSQL);
+                itemsResult = itemsStatement.executeQuery();
+
+                while (itemsResult.next()) {
+                    int itemId = itemsResult.getInt("itemid");
+                    items.add(new ItemDAO().getItem(itemId));
+                }
+
+                // 3. Creazione dell'oggetto Order con la lista di item
+                orders.add(OrderFactory.createOrder(orderId, user, items, status, date));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        } finally {
+            if (orderResult != null) orderResult.close();
+            if (itemsResult != null) itemsResult.close();
+            if (orderStatement != null) orderStatement.close();
+            if (itemsStatement != null) itemsStatement.close();
+        }
+
+        return orders;
+    }
+
+    public ArrayList<Order> getAllOrders() throws SQLException, ClassNotFoundException {
+        PreparedStatement orderStatement = null;
+        PreparedStatement itemsStatement = null;
+        ResultSet orderResult = null;
+        ResultSet itemsResult = null;
+        ArrayList<Order> orders = new ArrayList<>();
+
+        try {
+            // Recupero i dettagli dell'ordine
+            String orderSQL = String.format("SELECT * FROM Orders");
+            orderStatement = con.prepareStatement(orderSQL);
+            orderResult = orderStatement.executeQuery();
+
+            while (orderResult.next()) {
+                ArrayList<Item> items = new ArrayList<>();
+                int orderId = orderResult.getInt("id");
+                int userId = orderResult.getInt("userid");
+                String status = orderResult.getString("status");
+                String date = orderResult.getDate("date").toString();
+
+                User user = new UserDAO().getUser(userId);
+
+                // 2. Recupero gli item associati all'ordine
+                String itemsSQL = String.format("SELECT itemid FROM OrdersItem WHERE orderid = %d", orderId);
+                itemsStatement = con.prepareStatement(itemsSQL);
+                itemsResult = itemsStatement.executeQuery();
+
+                while (itemsResult.next()) {
+                    int itemId = itemsResult.getInt("itemid");
+                    items.add(new ItemDAO().getItem(itemId));
+                }
+
+                // 3. Creazione dell'oggetto Order con la lista di item
+                orders.add(OrderFactory.createOrder(orderId, user, items, status, date));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        } finally {
+            if (orderResult != null) orderResult.close();
+            if (itemsResult != null) itemsResult.close();
+            if (orderStatement != null) orderStatement.close();
+            if (itemsStatement != null) itemsStatement.close();
+        }
+
+        return orders;
+    }
+
+    public ArrayList<Order> getAllOrdersByStatus(boolean completed) throws SQLException, ClassNotFoundException {
+        PreparedStatement orderStatement = null;
+        PreparedStatement itemsStatement = null;
+        ResultSet orderResult = null;
+        ResultSet itemsResult = null;
+        ArrayList<Order> orders = new ArrayList<>();
+        String s = "Completed";
+
+        try {
+            // Recupero i dettagli dell'ordine
+            String orderSQL;
+            if (completed) {
+                orderSQL = String.format("SELECT * FROM Orders WHERE status = ?");
+            } else {
+                orderSQL = String.format("SELECT * FROM Orders WHERE status <> ?");
+            }
+            orderStatement = con.prepareStatement(orderSQL);
+            orderStatement.setString(1, s);
+            orderResult = orderStatement.executeQuery();
+
+            while (orderResult.next()) {
+                ArrayList<Item> items = new ArrayList<>();
+                int orderId = orderResult.getInt("id");
+                int userId = orderResult.getInt("userid");
+                String status = orderResult.getString("status");
+                String date = orderResult.getDate("date").toString();
+
+                User user = new UserDAO().getUser(userId);
+
+                // 2. Recupero gli item associati all'ordine
+                String itemsSQL = String.format("SELECT itemid FROM OrdersItem WHERE orderid = %d", orderId);
+                itemsStatement = con.prepareStatement(itemsSQL);
+                itemsResult = itemsStatement.executeQuery();
+
+                while (itemsResult.next()) {
+                    int itemId = itemsResult.getInt("itemid");
+                    items.add(new ItemDAO().getItem(itemId));
+                }
+
+                // 3. Creazione dell'oggetto Order con la lista di item
+                orders.add(OrderFactory.createOrder(orderId, user, items, status, date));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        } finally {
+            if (orderResult != null) orderResult.close();
+            if (itemsResult != null) itemsResult.close();
+            if (orderStatement != null) orderStatement.close();
+            if (itemsStatement != null) itemsStatement.close();
+        }
+
+        return orders;
+    }
 }
 
