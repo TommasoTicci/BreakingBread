@@ -21,7 +21,7 @@ CREATE TABLE PaymentMethod (
                                cvv VARCHAR(4) NOT NULL,
                                ownerName VARCHAR(50) NOT NULL,
                                ownerSurname VARCHAR(50) NOT NULL,
-                               withheld BOOLEAN DEFAULT FALSE
+                               withheld FLOAT DEFAULT 0.0
 );
 
 -- Aggiungi la chiave esterna a User dopo aver creato PaymentMethod

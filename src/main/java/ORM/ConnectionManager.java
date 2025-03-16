@@ -1,47 +1,53 @@
 package main.java.ORM;
 
-import java.sql.*;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 public class ConnectionManager {
-    private static final String username1 = "tonky";
-    private static final String password1 = "Aglio.2022!!";
-    private static final String username2 = "guillermo31415";
-    private static final String password2 = "Salo123";
-    private static final String url = "jdbc:postgresql://localhost:5432/breakingbread";
+
+    private static final String URL = "jdbc:postgresql://localhost:5432/breakingbread";
+    private static final String USERNAME = "guillermo31415";
+    private static final String PASSWORD = "Salo123";
     private static Connection connection = null;
-    private static ConnectionManager instance = null; // SINGLETON
+    private static volatile ConnectionManager instance = null;
+
 
     private ConnectionManager() {}
 
     public static ConnectionManager getInstance() {
-
-        if (instance == null) { instance = new ConnectionManager(); }
-
+        if (instance == null) {
+            synchronized (ConnectionManager.class) {
+                if (instance == null) {
+                    instance = new ConnectionManager();
+                }
+            }
+        }
         return instance;
-
     }
 
     public Connection getConnection() throws SQLException, ClassNotFoundException {
-
-        Class.forName("org.postgresql.Driver");
-
-        if (connection == null)
+        if (connection == null || connection.isClosed()) {
             try {
-                connection = DriverManager.getConnection(url, username1, password1);
-            } catch (SQLException e) {
+                Class.forName("org.postgresql.Driver");
+                connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+                System.out.println("Connection to database established successfully!");
+            } catch (SQLException | ClassNotFoundException e) {
                 System.err.println("Error: " + e.getMessage());
+                throw e;
             }
-
-        if (connection == null)
-            try {
-                connection = DriverManager.getConnection(url, username2, password2);
-            } catch (SQLException e) {
-                System.err.println("Error: " + e.getMessage());
-            }
-
+        }
         return connection;
-
     }
 
 
+    public void closeConnection() {
+        if (connection != null) {
+            try {
+                connection.close();
+                System.out.println("Connection to database closed successfully!");
+            } catch (SQLException e) {
+                System.err.println("Error while closing connection: " + e.getMessage());
+            }
+        }
+    }
 }

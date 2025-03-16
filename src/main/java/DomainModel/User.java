@@ -6,6 +6,7 @@ public class User {
     private int id;
     private String name;
     private String surname;
+    private String username;
     private int age;
     private String sex;
     private String email;
@@ -16,27 +17,54 @@ public class User {
     //CONSTRUCTORS
     public User() {}
 
-    public User(String name, String surname, int age, String email, String password, PaymentMethod paymentMethod) {
+
+    public User(int id,String name,String surname,String username,int age,String sex,String email,String password) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
+        this.username = username;
         this.age = age;
+        this.sex = sex;
         this.email = email;
         this.password = password;
-        this.paymentMethod = paymentMethod;
+        this.paymentMethod=null;
     }
 
-    public User(String name, String surname, int age, String email, String password,String cardNumber,String cardExpiryDate,String cardCVV) {
+    public User(int id,String name,String surname,String username,int age,String email,String password,String cardNumber,String cardExpiryDate,String cardCVV) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
+        this.username = username;
         this.age = age;
         this.email = email;
         this.password = password;
         this.paymentMethod = new PaymentMethod(name,surname,cardNumber,cardExpiryDate,cardCVV);
     }
 
-    public User(String name, String surname, int age, String email, String password) {
+    public User(String name,String surname,String username,int age,String email,String password,PaymentMethod paymentMethod) {
         this.name = name;
         this.surname = surname;
+        this.username = username;
+        this.age = age;
+        this.email = email;
+        this.password = password;
+        this.paymentMethod = paymentMethod;
+    }
+
+    public User(String name,String surname,String username,int age,String email,String password,String cardNumber,String cardExpiryDate,String cardCVV) {
+        this.name = name;
+        this.surname = surname;
+        this.username = username;
+        this.age = age;
+        this.email = email;
+        this.password = password;
+        this.paymentMethod = new PaymentMethod(name,surname,cardNumber,cardExpiryDate,cardCVV);
+    }
+
+    public User(String name,String surname,String username,int age,String email,String password) {
+        this.name = name;
+        this.surname = surname;
+        this.username = username;
         this.age = age;
         this.email = email;
         this.password = password;
@@ -46,6 +74,7 @@ public class User {
     public int getId() {return id;}
     public String getName() {return name;}
     public String getSurname() {return surname;}
+    public String getUsername() {return username;}
     public int getAge() {return age;}
     public String getSex() {return sex;}
     public String getEmail() {return email;}
@@ -64,6 +93,7 @@ public class User {
     public void setId(int id) {this.id = id;}
     public void setName(String name) {this.name = name;}
     public void setSurname(String surname) {this.surname = surname;}
+    public void setUsername(String username) {this.username = username;}
     public void setAge(int age) {this.age = age;}
     public void setSex(String sex) {this.sex = sex;}
     public void setEmail(String email) {this.email = email;}
