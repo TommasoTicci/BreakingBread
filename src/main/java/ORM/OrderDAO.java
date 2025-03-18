@@ -220,7 +220,7 @@ public class OrderDAO {
         }
     }
 
-    //TODO: ??? rimuovere ordine da data
+    //TODO: ??? ordine da data
 
     public void removeItemsFromEveryOrderItems(int itemId) throws SQLException, ClassNotFoundException {
         PreparedStatement pStatement = null;
@@ -430,6 +430,23 @@ public class OrderDAO {
         }
 
         return orders;
+    }
+
+    public void updateStatus(int orderId, String status) throws SQLException, ClassNotFoundException {
+        PreparedStatement pStatement = null;
+
+        String sqlStatement = String.format("UPDATE Orders SET status = %s WHERE id = %d", status, orderId);
+
+        try {
+            pStatement = con.prepareStatement(sqlStatement);
+            pStatement.executeUpdate();
+            System.out.println("Order (status) updated successfully.");
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        } finally {
+            if (pStatement != null)
+                pStatement.close();
+        }
     }
 }
 
