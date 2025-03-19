@@ -22,22 +22,40 @@ public class OrderDAO {
         }
     }
 
-    public void createOrder(int userId) throws SQLException, ClassNotFoundException {
+    public int createOrder(int userId) throws SQLException, ClassNotFoundException {
         PreparedStatement pStatement = null;
+        ResultSet generatedKeys = null;
+        int orderId = -1;
 
-        String sqlStatement = String.format("INSERT INTO Orders (userid, status, date) " +
-                "VALUES (%d, '%s', '%s')", userId, "Received", LocalDate.now());
+        String sqlStatement = "INSERT INTO Orders (userid, status, date) VALUES (?, ?, ?)";
 
         try {
-            pStatement = con.prepareStatement(sqlStatement);
-            pStatement.executeUpdate();
-            System.out.println("Order inserted successfully.");
+            pStatement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
+            pStatement.setInt(1, userId);
+            pStatement.setString(2, "Received");
+            pStatement.setDate(3, java.sql.Date.valueOf(LocalDate.now()));
+
+            int affectedRows = pStatement.executeUpdate();
+
+            if (affectedRows > 0) {
+                generatedKeys = pStatement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    orderId = generatedKeys.getInt(1);
+                    System.out.println("Order inserted successfully. Order ID: " + orderId);
+                }
+            }
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
         } finally {
-            if (pStatement != null)
+            if (generatedKeys != null) {
+                generatedKeys.close();
+            }
+            if (pStatement != null) {
                 pStatement.close();
+            }
         }
+
+        return orderId;
     }
 
     public void createOrderItem(int orderId, ArrayList<Item> items) throws SQLException, ClassNotFoundException {
