@@ -14,11 +14,24 @@ public class UserManagerOrderController {
         this.user = user;
     }
 
-    //fixme in caso si decida di mettere un attributo qty a item
-    public void addItem(int itemId) {
-        user.getCart().add(itemId);
+    public boolean addItem(int itemId, int quantity) throws SQLException, ClassNotFoundException {
+        UserViewMenuController vmc = new UserViewMenuController();
+        boolean found = false;
+        ArrayList<Item> items = vmc.viewMenu();
+        for (Item item : items) {
+            if (item.getItemId() == itemId) {
+                found = true;
+                break;
+            }
+        }
+        if (found) {
+            for (int i = 0; i < quantity; i++) {
+                user.getCart().add(itemId);
+            }
+        }
+        return found;
     }
-    //fixme uguale a sopra
+
     public void removeItem(int itemId) {
         user.getCart().remove(Integer.valueOf(itemId));
     }
@@ -40,13 +53,36 @@ public class UserManagerOrderController {
 
     public void confirmCurrentOrder()throws SQLException ,ClassNotFoundException{
         OrderDAO orderDAO = new OrderDAO();
-        int orderId=orderDAO.createOrder(user.getId());
-        orderDAO.createOrderItemFromIds(orderId,user.getCart());
-        user.getCart().clear();
+        ItemDAO itemDAO = new ItemDAO();
+        float total = 0;
+        ArrayList<Integer> cart = user.getCart();
+        for (Integer itemId : cart) {
+            total += itemDAO.getItem(itemId).getPrice() * (1 - ((float) itemDAO.getItem(itemId).getDiscountPercentage() / 100));
+        }
+        if (user.getCart().isEmpty()) {
+            System.err.println("No items in cart.");
+            return;
+        }
+        if (user.getPaymentMethod() == null)
+        {
+            System.err.println("No payment method found. Please add a payment method from your profile page.");
+        }
+        else{
+            try {
+                user.getPaymentMethod().pay(total);
+                int orderId = orderDAO.createOrder(user.getId());
+                orderDAO.createOrderItemFromIds(orderId, user.getCart());
+                user.getCart().clear();
+            } catch (RuntimeException e) {
+                System.err.println(e.getMessage());
+            }
+        }
     }
 
     public void cancelCurrentOrder(){
-        user.getCart().clear();
+        if (user.getCart() != null) {
+            user.getCart().clear();
+        }
     }
 
     public ArrayList<Order> viewOrders() throws SQLException ,ClassNotFoundException{
@@ -56,8 +92,18 @@ public class UserManagerOrderController {
 
     public void cancelOrder(int orderId) throws SQLException ,ClassNotFoundException{
         OrderDAO orderDAO = new OrderDAO();
-        if(orderDAO.getOrder(orderId).getStatus().equals("Recived")) {
+        if (orderDAO.getOrder(orderId) == null || orderDAO.getOrder(orderId).getUser().getId() != user.getId()) {
+            System.err.println("Order not found.");
+            return;
+        }
+        if (user.getPaymentMethod() == null){
+            System.err.println("Refound not possible. No payment method found. Please add a payment method from your profile page.");
+            return;
+        }
+        if(orderDAO.getOrder(orderId).getStatus().equals("Received")) {
             orderDAO.removeOrder(orderId);
+        } else {
+            System.err.println("Order cannot be canceled.");
         }
     }
 

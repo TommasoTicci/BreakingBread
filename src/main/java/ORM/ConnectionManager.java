@@ -39,7 +39,6 @@ public class ConnectionManager {
         return connection;
     }
 
-
     public void closeConnection() {
         if (connection != null) {
             try {

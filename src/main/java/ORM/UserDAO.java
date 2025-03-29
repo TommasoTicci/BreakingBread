@@ -36,11 +36,11 @@ public class UserDAO {
             System.out.println("User added successfully.");
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
-            throw e;
+            //throw e;
         }
     }
 
-    public void addUser(String name, String surname, String username, int age, String sex, String email, String password, String paymentMethod, String cardExpirationDate, String cardCVV, float withheld) throws SQLException {
+    public void addUser(String name, String surname, String username, int age, String sex, String email, String password, String paymentMethod, String cardExpirationDate, String cardCVV, float withheld, String ownerName, String ownerSurname) throws SQLException {
 
         connection.setAutoCommit(false);
 
@@ -50,10 +50,10 @@ public class UserDAO {
 
             try (PreparedStatement paymentStatement = connection.prepareStatement(paymentMethodSql)) {
                 paymentStatement.setString(1, paymentMethod);
-                paymentStatement.setDate(2, Date.valueOf(cardExpirationDate));
+                paymentStatement.setString(2, cardExpirationDate);
                 paymentStatement.setString(3, cardCVV);
-                paymentStatement.setString(4, name);
-                paymentStatement.setString(5, surname);
+                paymentStatement.setString(4, ownerName);
+                paymentStatement.setString(5, ownerSurname);
                 paymentStatement.setFloat(6, withheld);
 
                 paymentStatement.executeUpdate();
@@ -79,7 +79,7 @@ public class UserDAO {
         } catch (SQLException e) {
             connection.rollback();
             System.err.println("Error: " + e.getMessage());
-            throw e;
+            //throw e;
         } finally {
             connection.setAutoCommit(true);
         }
@@ -245,7 +245,7 @@ public class UserDAO {
                                     String cardExpiryDate = paymentResultSet.getString("expirationDate");
                                     String cardCVV = paymentResultSet.getString("cvv");
 
-                                    return new User(id, name, surname, userUsername, age, email, userPassword, cardNumber, cardExpiryDate, cardCVV);
+                                    return new User(id, name, surname, userUsername, age, sex, email, userPassword, cardNumber, cardExpiryDate, cardCVV);
                                 }
                             }
                         }
@@ -293,7 +293,7 @@ public class UserDAO {
                                 String cardCVV = paymentResultSet.getString("cvv");
 
                                 // Crea l'oggetto User con il secondo costruttore che include PaymentMethod
-                                users.add(new User(id, name, surname, username, age, email, password, cardNumber, cardExpiryDate, cardCVV));
+                                users.add(new User(id, name, surname, username, age, sex, email, password, cardNumber, cardExpiryDate, cardCVV));
                             }
                         }
                     }
@@ -337,7 +337,7 @@ public class UserDAO {
                                     String cardCVV = paymentResultSet.getString("cvv");
 
                                     // Crea l'oggetto User con il secondo costruttore che include PaymentMethod
-                                    return new User(id, name, surname, userUsername, age, email, password, cardNumber, cardExpiryDate, cardCVV);
+                                    return new User(id, name, surname, userUsername, age, sex, email, password, cardNumber, cardExpiryDate, cardCVV);
                                 }
                             }
                         }
@@ -383,7 +383,7 @@ public class UserDAO {
                                     String cardCVV = paymentResultSet.getString("cvv");
 
                                     // Crea l'oggetto User con il secondo costruttore che include PaymentMethod
-                                    return new User(id, name, surname, userUsername, age, email, password, cardNumber, cardExpiryDate, cardCVV);
+                                    return new User(id, name, surname, userUsername, age, sex, email, password, cardNumber, cardExpiryDate, cardCVV);
                                 }
                             }
                         }
@@ -552,7 +552,7 @@ public class UserDAO {
 
             try (PreparedStatement paymentStatement = connection.prepareStatement(paymentMethodSql)) {
                 paymentStatement.setString(1, cardNumber);
-                paymentStatement.setDate(2, java.sql.Date.valueOf(expirationDate));
+                paymentStatement.setString(2, expirationDate);
                 paymentStatement.setString(3, cvv);
                 paymentStatement.setString(4, ownerName);
                 paymentStatement.setString(5, ownerSurname);

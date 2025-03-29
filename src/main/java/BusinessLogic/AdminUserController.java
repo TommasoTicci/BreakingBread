@@ -11,7 +11,7 @@ public class AdminUserController {
     //CONSTRUCTOR
     public AdminUserController() {}
 
-    public ArrayList<User> viewUser() throws SQLException, ClassNotFoundException {
+    public ArrayList<User> viewUsers() throws SQLException, ClassNotFoundException {
         UserDAO userDAO = new UserDAO();
         return userDAO.getAllUsers();
     }

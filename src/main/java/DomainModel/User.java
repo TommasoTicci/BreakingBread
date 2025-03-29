@@ -28,46 +28,55 @@ public class User {
         this.email = email;
         this.password = password;
         this.paymentMethod=null;
+        this.cart= new ArrayList<>();
     }
 
-    public User(int id,String name,String surname,String username,int age,String email,String password,String cardNumber,String cardExpiryDate,String cardCVV) {
+    public User(int id,String name,String surname,String username,int age, String sex, String email,String password,String cardNumber,String cardExpiryDate,String cardCVV) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.username = username;
         this.age = age;
+        this.sex = sex;
         this.email = email;
         this.password = password;
         this.paymentMethod = new PaymentMethod(name,surname,cardNumber,cardExpiryDate,cardCVV);
+        this.cart= new ArrayList<>();
     }
 
-    public User(String name,String surname,String username,int age,String email,String password,PaymentMethod paymentMethod) {
+    public User(String name,String surname,String username,int age, String sex,String email,String password,PaymentMethod paymentMethod) {
         this.name = name;
         this.surname = surname;
         this.username = username;
         this.age = age;
+        this.sex = sex;
         this.email = email;
         this.password = password;
         this.paymentMethod = paymentMethod;
+        this.cart= new ArrayList<>();
     }
 
-    public User(String name,String surname,String username,int age,String email,String password,String cardNumber,String cardExpiryDate,String cardCVV) {
+    public User(String name,String surname,String username,int age, String sex,String email,String password,String cardNumber,String cardExpiryDate,String cardCVV) {
         this.name = name;
         this.surname = surname;
         this.username = username;
         this.age = age;
+        this.sex = sex;
         this.email = email;
         this.password = password;
         this.paymentMethod = new PaymentMethod(name,surname,cardNumber,cardExpiryDate,cardCVV);
+        this.cart= new ArrayList<>();
     }
 
-    public User(String name,String surname,String username,int age,String email,String password) {
+    public User(String name,String surname,String username,int age, String sex,String email,String password) {
         this.name = name;
         this.surname = surname;
         this.username = username;
         this.age = age;
+        this.sex = sex;
         this.email = email;
         this.password = password;
+        this.cart= new ArrayList<>();
     }
 
     //GETTERS
@@ -103,6 +112,8 @@ public class User {
         this.paymentMethod = new PaymentMethod(name,surname,cardNumber,cardExpiryDate,cardCVV);
     }
     public void setCart(ArrayList<Integer> cart) {this.cart = cart;}
+    public void addToCart(int id) {this.cart.add(id);}
+    public void removeFromCart(int id) {this.cart.remove(id);}
 }
 
 

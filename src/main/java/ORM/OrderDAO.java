@@ -8,6 +8,8 @@ import main.java.DomainModel.User;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class OrderDAO {
 
@@ -61,7 +63,7 @@ public class OrderDAO {
     public void createOrderItem(int orderId, ArrayList<Item> items) throws SQLException, ClassNotFoundException {
         PreparedStatement pStatement = null;
 
-        String sqlStatement = String.format("INSERT INTO OrdersItem (orderid, itemid) VALUES (?, ?)");
+        String sqlStatement = "INSERT INTO OrdersItem (orderid, itemid) VALUES (?, ?)";
 
         try {
             pStatement = con.prepareStatement(sqlStatement);
@@ -85,36 +87,42 @@ public class OrderDAO {
     public void createOrderItemFromIds(int orderId, ArrayList<Integer> itemsId) throws SQLException, ClassNotFoundException {
         PreparedStatement pStatement = null;
 
-        String insertStatement = String.format("INSERT INTO OrdersItem (orderid, itemid) VALUES (?, ?)");
+        Map<Integer, Integer> itemCount = new HashMap<>();
+        for (Integer itemId : itemsId) {
+            itemCount.put(itemId, itemCount.getOrDefault(itemId, 0) + 1);
+        }
+
+        String insertStatement = "INSERT INTO OrdersItem (orderid, itemid, quantity) VALUES (?, ?, ?)";
 
         try {
             pStatement = con.prepareStatement(insertStatement);
 
-            for (Integer itemId : itemsId) {
+            for (Map.Entry<Integer, Integer> entry : itemCount.entrySet()) {
                 pStatement.setInt(1, orderId);
-                pStatement.setInt(2, itemId);
+                pStatement.setInt(2, entry.getKey());
+                pStatement.setInt(3, entry.getValue());
                 pStatement.addBatch();
             }
 
             pStatement.executeBatch();
-            System.out.println("Items inserted successfully to Order.");
+            System.out.println("Items inserted/updated successfully in Order.");
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
         } finally {
-            if (pStatement != null)
-                pStatement.close();
+            if (pStatement != null) pStatement.close();
         }
     }
 
     public void removeOrder(int orderId) throws SQLException, ClassNotFoundException {
         PreparedStatement pStatement = null;
 
-        String sqlStatement = String.format("DELETE FROM Orders WHERE orderid = %d", orderId);
+        String sqlStatement = "DELETE FROM Orders WHERE id = ?";
 
         try {
             pStatement = con.prepareStatement(sqlStatement);
+            pStatement.setInt(1, orderId);
             pStatement.executeUpdate();
-            System.out.println("Orders deleted successfully.");
+            System.out.println("Order deleted successfully.");
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
         } finally {
@@ -126,10 +134,11 @@ public class OrderDAO {
     public void removeOrderItem(int orderId) throws SQLException, ClassNotFoundException {
         PreparedStatement pStatement = null;
 
-        String sqlStatement = String.format("DELETE FROM OrdersItem WHERE orderid = %d", orderId);
+        String sqlStatement = "DELETE FROM OrdersItem WHERE orderid = ?";
 
         try {
             pStatement = con.prepareStatement(sqlStatement);
+            pStatement.setInt(1, orderId);
             pStatement.executeUpdate();
             System.out.println("Item deleted successfully from Order.");
         } catch (SQLException e) {
@@ -238,8 +247,6 @@ public class OrderDAO {
         }
     }
 
-    //TODO: ??? ordine da data
-
     public void removeItemsFromEveryOrderItems(int itemId) throws SQLException, ClassNotFoundException {
         PreparedStatement pStatement = null;
 
@@ -279,13 +286,15 @@ public class OrderDAO {
                 User user = new UserDAO().getUser(userId);
 
                 // 2. Recupero gli item associati all'ordine
-                String itemsSQL = String.format("SELECT itemid FROM OrdersItem WHERE orderid = %d", orderId);
+                String itemsSQL = String.format("SELECT * FROM OrdersItem WHERE orderid = %d", orderId);
                 itemsStatement = con.prepareStatement(itemsSQL);
                 itemsResult = itemsStatement.executeQuery();
 
                 while (itemsResult.next()) {
                     int itemId = itemsResult.getInt("itemid");
-                    items.add(new ItemDAO().getItem(itemId));
+                    for (int i = 0; i < itemsResult.getInt("quantity"); i++){
+                        items.add(new ItemDAO().getItem(itemId));
+                    }
                 }
 
                 // 3. Creazione dell'oggetto Order con la lista di item
@@ -312,8 +321,9 @@ public class OrderDAO {
 
         try {
             // Recupero i dettagli dell'ordine
-            String orderSQL = String.format("SELECT * FROM Orders WHERE userid = %d", userId);
+            String orderSQL = String.format("SELECT * FROM Orders WHERE userid = ?");
             orderStatement = con.prepareStatement(orderSQL);
+            orderStatement.setInt(1, userId);
             orderResult = orderStatement.executeQuery();
 
             while (orderResult.next()) {
@@ -325,13 +335,16 @@ public class OrderDAO {
                 User user = new UserDAO().getUser(userId);
 
                 // 2. Recupero gli item associati all'ordine
-                String itemsSQL = String.format("SELECT itemid FROM OrdersItem WHERE orderid = %d", orderId);
+                String itemsSQL = String.format("SELECT * FROM OrdersItem WHERE orderid = ?");
                 itemsStatement = con.prepareStatement(itemsSQL);
+                itemsStatement.setInt(1, orderId);
                 itemsResult = itemsStatement.executeQuery();
 
                 while (itemsResult.next()) {
                     int itemId = itemsResult.getInt("itemid");
-                    items.add(new ItemDAO().getItem(itemId));
+                    for (int i = 0; i < itemsResult.getInt("quantity"); i++){
+                        items.add(new ItemDAO().getItem(itemId));
+                    }
                 }
 
                 // 3. Creazione dell'oggetto Order con la lista di item
@@ -372,13 +385,15 @@ public class OrderDAO {
                 User user = new UserDAO().getUser(userId);
 
                 // 2. Recupero gli item associati all'ordine
-                String itemsSQL = String.format("SELECT itemid FROM OrdersItem WHERE orderid = %d", orderId);
+                String itemsSQL = String.format("SELECT * FROM OrdersItem WHERE orderid = %d", orderId);
                 itemsStatement = con.prepareStatement(itemsSQL);
                 itemsResult = itemsStatement.executeQuery();
 
                 while (itemsResult.next()) {
                     int itemId = itemsResult.getInt("itemid");
-                    items.add(new ItemDAO().getItem(itemId));
+                    for (int i = 0; i < itemsResult.getInt("quantity"); i++){
+                        items.add(new ItemDAO().getItem(itemId));
+                    }
                 }
 
                 // 3. Creazione dell'oggetto Order con la lista di item
@@ -426,13 +441,15 @@ public class OrderDAO {
                 User user = new UserDAO().getUser(userId);
 
                 // 2. Recupero gli item associati all'ordine
-                String itemsSQL = String.format("SELECT itemid FROM OrdersItem WHERE orderid = %d", orderId);
+                String itemsSQL = String.format("SELECT * FROM OrdersItem WHERE orderid = %d", orderId);
                 itemsStatement = con.prepareStatement(itemsSQL);
                 itemsResult = itemsStatement.executeQuery();
 
                 while (itemsResult.next()) {
                     int itemId = itemsResult.getInt("itemid");
-                    items.add(new ItemDAO().getItem(itemId));
+                    for (int i = 0; i < itemsResult.getInt("quantity"); i++){
+                        items.add(new ItemDAO().getItem(itemId));
+                    }
                 }
 
                 // 3. Creazione dell'oggetto Order con la lista di item
@@ -453,12 +470,19 @@ public class OrderDAO {
     public void updateStatus(int orderId, String status) throws SQLException, ClassNotFoundException {
         PreparedStatement pStatement = null;
 
-        String sqlStatement = String.format("UPDATE Orders SET status = %s WHERE id = %d", status, orderId);
+        String sqlStatement = "UPDATE Orders SET status = ? WHERE id = ?";
 
         try {
             pStatement = con.prepareStatement(sqlStatement);
+            pStatement.setString(1, status);
+            pStatement.setInt(2, orderId);
             pStatement.executeUpdate();
-            System.out.println("Order (status) updated successfully.");
+            int rowsAffected = pStatement.executeUpdate();
+            if (rowsAffected == 0) {
+                System.out.println("No order found with id " + orderId);
+            } else {
+                System.out.println("Order status updated successfully.");
+            }
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
         } finally {

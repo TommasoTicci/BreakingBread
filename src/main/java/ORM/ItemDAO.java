@@ -50,7 +50,12 @@ public class ItemDAO {
             pStatement = con.prepareStatement(sqlStatement);
             pStatement.setInt(1, id);
             pStatement.executeUpdate();
-            System.out.println("Item removed successfully.");
+            int rowsAffected = pStatement.executeUpdate();
+            if (rowsAffected == 0) {
+                System.out.println("No item found with id " + id);
+            } else {
+                System.out.println("Item deleted successfully.");
+            }
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
         } finally {
@@ -140,52 +145,73 @@ public class ItemDAO {
 
     public void updateDiscount(int id, int discount) throws SQLException, ClassNotFoundException {
         PreparedStatement pStatement = null;
-
-        String sqlStatement = String.format("UPDATE Item SET discount = %d WHERE id = %d", discount, id);
+        String sqlStatement = "UPDATE Item SET discount = ? WHERE id = ?";
 
         try {
             pStatement = con.prepareStatement(sqlStatement);
+            pStatement.setInt(1, discount);
+            pStatement.setInt(2, id);
             pStatement.executeUpdate();
-            System.out.println("Item (discount) updated successfully.");
+            int rowsAffected = pStatement.executeUpdate();
+            if (rowsAffected == 0) {
+                System.out.println("No item found with id " + id);
+            } else {
+                System.out.println("Item (discount) updated successfully.");
+            }
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
         } finally {
-            if (pStatement != null)
+            if (pStatement != null) {
                 pStatement.close();
+            }
         }
     }
 
     public void updatePrice(int id, float price) throws SQLException, ClassNotFoundException {
         PreparedStatement pStatement = null;
-
-        String sqlStatement = String.format("UPDATE Item SET price = %f WHERE id = %d", price, id);
+        String sqlStatement = "UPDATE Item SET price = ? WHERE id = ?";
 
         try {
             pStatement = con.prepareStatement(sqlStatement);
+            pStatement.setFloat(1, price);
+            pStatement.setInt(2, id);
             pStatement.executeUpdate();
-            System.out.println("Item (price) updated successfully.");
+            int rowsAffected = pStatement.executeUpdate();
+            if (rowsAffected == 0) {
+                System.out.println("No item found with id " + id);
+            } else {
+                System.out.println("Item (price) updated successfully.");
+            }
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
         } finally {
-            if (pStatement != null)
+            if (pStatement != null) {
                 pStatement.close();
+            }
         }
     }
 
     public void updateDescription(int id, String description) throws SQLException, ClassNotFoundException {
         PreparedStatement pStatement = null;
-
-        String sqlStatement = String.format("UPDATE Item SET description = %s WHERE id = %d", description, id);
+        String sqlStatement = "UPDATE Item SET description = ? WHERE id = ?";
 
         try {
             pStatement = con.prepareStatement(sqlStatement);
+            pStatement.setString(1, description);
+            pStatement.setInt(2, id);
             pStatement.executeUpdate();
-            System.out.println("Item (description) updated successfully.");
+            int rowsAffected = pStatement.executeUpdate();
+            if (rowsAffected == 0) {
+                System.out.println("No item found with id " + id);
+            } else {
+                System.out.println("Item (description) updated successfully.");
+            }
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
         } finally {
-            if (pStatement != null)
+            if (pStatement != null) {
                 pStatement.close();
+            }
         }
     }
 }

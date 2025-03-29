@@ -1,11 +1,11 @@
 -- Elimina le tabelle se esistono
-DROP TABLE IF EXISTS OrdersItem, Orders, PaymentMethod, Users CASCADE;
+DROP TABLE IF EXISTS Item, OrdersItem, Orders, PaymentMethod, Users CASCADE;
 
 -- Crea la tabella User senza la chiave esterna a PaymentMethod
 CREATE TABLE Users (
                         id SERIAL PRIMARY KEY,
-                        name VARCHAR(50) NOT NULL,
-                        surname VARCHAR(50) NOT NULL,
+                        name VARCHAR(50),
+                        surname VARCHAR(50),
                         username VARCHAR(50) UNIQUE NOT NULL,
                         age INT CHECK (age >= 0),
                         email VARCHAR(100) UNIQUE NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE Users (
 -- Crea la tabella PaymentMethod
 CREATE TABLE PaymentMethod (
                                cardNumber VARCHAR(16) PRIMARY KEY,
-                               expirationDate DATE NOT NULL,
+                               expirationDate VARCHAR(5) NOT NULL,
                                cvv VARCHAR(4) NOT NULL,
                                ownerName VARCHAR(50) NOT NULL,
                                ownerSurname VARCHAR(50) NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE Orders (
                         id SERIAL PRIMARY KEY,
                         userId INT NOT NULL,
                         status VARCHAR(20),
-                        date TIMESTAMP,
+                        date VARCHAR(25),
                         FOREIGN KEY (userId) REFERENCES Users(id) ON DELETE CASCADE
 );
 
@@ -54,8 +54,12 @@ CREATE TABLE Item (
 CREATE TABLE OrdersItem (
                             orderId INT NOT NULL,
                             itemId INT NOT NULL,
+                            quantity INT NOT NULL,
                             PRIMARY KEY (orderId, itemId),
                             FOREIGN KEY (orderId) REFERENCES Orders(id) ON DELETE CASCADE,
                             FOREIGN KEY (itemId) REFERENCES Item(id) ON DELETE CASCADE
 
 );
+
+--Aggiunge l'Admin
+INSERT INTO Users (id, username, email, password) VALUES (0, 'ADMIN', '', 'admin');

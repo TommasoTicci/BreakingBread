@@ -37,14 +37,13 @@ public class PaymentMethod {
     public void setWithheld(float withheld) {this.withheld = withheld;}
 
     //METHODS
-    public void pay(Order order) {
-        float total = order.getTotal();
+    public void pay(float amount) {
         int tries = 0;
         Scanner scanner = new Scanner(System.in);
 
-        total += total * withheld;
+        amount += amount * withheld;
 
-        System.out.println("Paying order: " + order.getOrderId() + " - Total amount: " + total);
+        System.out.println("Paying order - Total amount: " + amount);
         System.out.println("Type y to confirm");
 
         String confirmation = scanner.nextLine().toLowerCase();
@@ -65,7 +64,7 @@ public class PaymentMethod {
                 System.out.println("Error: Invalid CVV. Please try again.");
             }
             tries++;
-        } while (!(cVV.equals(cardCVV)) || tries < 5);
+        } while (!(cVV.equals(cardCVV)) && tries < 5);
 
         if (tries == 5) {
             System.out.println("Error: too many tries.");
@@ -78,7 +77,7 @@ public class PaymentMethod {
     public void refund(Order order) {
         String cr = "Received";
         String co = order.getStatus();
-        float total =  order.getTotal();
+        float total =  order.getTotal() + order.getTotal() * withheld;
 
         if (!(cr.equals(co))) {
             System.out.println("Refund failed. Your order cannot be refunded.");

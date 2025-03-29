@@ -30,7 +30,7 @@ public class Order {
     public float getTotal() {
         float total = 0;
         for (Item item : items) {
-            total += item.getPrice();
+            total += item.getPrice() - (item.getPrice() * item.getDiscountPercentage() / 100);
         }
         return total;
     }

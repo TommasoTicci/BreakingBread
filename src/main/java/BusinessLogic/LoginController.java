@@ -26,9 +26,9 @@ public class LoginController {
         return userDAO.verifyPassword(username, password);
     }
 
-    public User register(String name, String surname, String username, String email, int age, String password, String sex, String cardNum, String cardExp, String cardCVV) throws SQLException, ClassNotFoundException {
+    public User register(String name, String surname, String username, String email, int age, String password, String sex, String cardNum, String cardExp, String cardCVV, String ownerName, String ownerSurname) throws SQLException, ClassNotFoundException {
         UserDAO userDAO = new UserDAO();
-        userDAO.addUser(name, surname, username, age, sex, email, password, cardNum, cardExp, cardCVV, 0.01F);
+        userDAO.addUser(name, surname, username, age, sex, email, password, cardNum, cardExp, cardCVV, 0.01F, ownerName, ownerSurname);
         return userDAO.verifyPassword(username, password);
     }
 }

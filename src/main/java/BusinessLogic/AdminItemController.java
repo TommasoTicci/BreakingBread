@@ -58,10 +58,28 @@ public class AdminItemController {
     public void editItem(int id, String option, String edit) throws SQLException, ClassNotFoundException {
         ItemDAO itemDAO = new ItemDAO();
         switch (option) {
-            case "1": itemDAO.updateDescription(id, edit); break;
-            case "2": itemDAO.updatePrice(id, Float.parseFloat(edit)); break;
-            case "3": itemDAO.updateDiscount(id, Integer.parseInt(edit)); break;
-            default: System.out.println("Invalid option"); return;
+            case "1": {
+                try {
+                    itemDAO.updateDescription(id, edit);
+                } catch (SQLException e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
+                break;}
+            case "2": {
+                try {
+                    itemDAO.updatePrice(id, Float.parseFloat(edit));
+                } catch (Exception e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
+                break;}
+            case "3": {
+                try {
+                    itemDAO.updateDiscount(id, Integer.parseInt(edit));
+                } catch (Exception e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
+                break;}
+            default: {System.out.println("Invalid option"); return;}
         }
         System.out.println("Item updated successfully");
     }

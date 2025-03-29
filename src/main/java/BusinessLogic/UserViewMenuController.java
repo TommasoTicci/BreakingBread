@@ -9,21 +9,19 @@ import main.java.ORM.ItemDAO;
 import main.java.ORM.OrderDAO;
 
 public class UserViewMenuController {
-    private User user;
 
-    public UserViewMenuController(User user) {
-        this.user = user;
-    }
+    public UserViewMenuController() {}
+
+    //TODO view by type
 
     public ArrayList<Item> viewMenu()throws SQLException,ClassNotFoundException {
         ItemDAO itemDAO = new ItemDAO();
         return itemDAO.getAllItems();
     }
 
-    public ArrayList<Order> viewOrders()throws SQLException,ClassNotFoundException{
-        OrderDAO orderDAO = new OrderDAO();
-        return orderDAO.getOrdersByUser(this.user.getId());
+    public ArrayList<Item> viewOffers()throws SQLException,ClassNotFoundException{
+        ItemDAO itemDAO = new ItemDAO();
+        return itemDAO.getAllDiscountedItems();
     }
 
 }
-

@@ -13,7 +13,7 @@ public class UserProfileController {
         this.user = user;
     }
 
-    public void updateUserName(String newUserName)throws SQLException  {
+    public void updateUsername(String newUserName)throws SQLException  {
         UserDAO userDAO = new UserDAO();
         userDAO.updateUsername(user.getUsername(),newUserName);
         user.setUsername(newUserName);
@@ -34,7 +34,7 @@ public class UserProfileController {
     public void updateName(String newName)throws SQLException {
        UserDAO userDAO = new UserDAO();
        userDAO.updateName(user.getUsername(),newName);
-       user.setUsername(newName);
+       user.setName(newName);
     }
 
     public void updateSurname(String newSurname)throws SQLException {
@@ -55,21 +55,29 @@ public class UserProfileController {
         user.setSex(newGender);
     }
 
-    public void setPaymentMethod(String cardNumber, String cardExpiryDate, String cardCVV)throws SQLException {
+    public void setPaymentMethod(String cardNumber, String cardExpiryDate, String cardCVV, String ownerName, String ownerSurname) throws SQLException {
         PaymentMethodDAO paymentMethodDAO = new PaymentMethodDAO();
-        PaymentMethod paymentMethod = new PaymentMethod(user.getName(),user.getSurname(),cardNumber,cardExpiryDate,cardCVV);
+        UserDAO userDAO = new UserDAO();
+        PaymentMethod paymentMethod = new PaymentMethod(ownerName, ownerSurname, cardNumber, cardExpiryDate, cardCVV);
         paymentMethodDAO.addPaymentMethod(paymentMethod);
+        userDAO.updatePayment(user.getUsername(), cardNumber, cardExpiryDate, cardCVV, ownerName, ownerSurname, 0.01F);
         user.setPaymentMethod(paymentMethod);
     }
 
-    public void changePaymentMethod(String oldCardNumber,String cardNumber, String cardExpiryDate, String cardCVV)throws SQLException {
+    public void changePaymentMethod(String oldCardNumber,String cardNumber, String cardExpiryDate, String cardCVV, String ownerName, String ownerSurname) throws SQLException {
         PaymentMethodDAO paymentMethodDAO = new PaymentMethodDAO();
+        UserDAO userDAO = new UserDAO();
         paymentMethodDAO.removePaymentMethod(oldCardNumber);
-        setPaymentMethod(cardNumber,cardExpiryDate,cardCVV);
+        user.setPaymentMethod(null);
+        PaymentMethod paymentMethod = new PaymentMethod(ownerName, ownerSurname, cardNumber, cardExpiryDate, cardCVV);
+        paymentMethodDAO.addPaymentMethod(paymentMethod);
+        userDAO.updatePayment(user.getUsername(), cardNumber, cardExpiryDate, cardCVV, ownerName, ownerSurname, 0.01F);
+        user.setPaymentMethod(paymentMethod);
     }
 
-    public void removePaymentMethod(String cardNumber)throws SQLException {
+    public void removePaymentMethod(String cardNumber) throws SQLException {
         PaymentMethodDAO paymentMethodDAO = new PaymentMethodDAO();
+        UserDAO userDAO = new UserDAO();
         paymentMethodDAO.removePaymentMethod(cardNumber);
         user.setPaymentMethod(null);
     }
