@@ -18,26 +18,40 @@ public class ItemDAO {
         }
     }
 
-    public void addItem(String name, String description, String type, float price, int discount) throws SQLException, ClassNotFoundException {
+    public int addItem(String name, String description, String type, float price, int discount)
+            throws SQLException, ClassNotFoundException {
         PreparedStatement pStatement = null;
+        ResultSet generatedKeys = null;
+        int generatedId = -1;
 
         String sqlStatement = "INSERT INTO Item (name, description, type, price, discount) VALUES (?, ?, ?, ?, ?)";
 
         try {
-            pStatement = con.prepareStatement(sqlStatement);
-            pStatement = con.prepareStatement(sqlStatement);
+            pStatement = con.prepareStatement(sqlStatement, Statement.RETURN_GENERATED_KEYS);
             pStatement.setString(1, name);
             pStatement.setString(2, description);
             pStatement.setString(3, type);
             pStatement.setFloat(4, price);
             pStatement.setInt(5, discount);
             pStatement.executeUpdate();
-            System.out.println("Item added successfully.");
+
+            generatedKeys = pStatement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                generatedId = generatedKeys.getInt(1);
+            }
+
+            System.out.println("Item added successfully with ID: " + generatedId);
+            return generatedId;
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
+            throw e;
         } finally {
-            if (pStatement != null)
+            if (generatedKeys != null) {
+                generatedKeys.close();
+            }
+            if (pStatement != null) {
                 pStatement.close();
+            }
         }
     }
 

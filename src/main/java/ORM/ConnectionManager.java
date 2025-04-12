@@ -6,8 +6,8 @@ import java.sql.SQLException;
 public class ConnectionManager {
 
     private static final String URL = "jdbc:postgresql://localhost:5432/breakingbread";
-    private static final String USERNAME = "tonky";
-    private static final String PASSWORD = "Mei.2022!!";
+    private static final String USERNAME = "guillermo31415";
+    private static final String PASSWORD = "Salo123!!";
     private static Connection connection = null;
     private static volatile ConnectionManager instance = null;
 
