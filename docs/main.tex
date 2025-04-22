@@ -8,23 +8,41 @@
 \usepackage{enumitem} 
 \usepackage{float}    
 
-\title{Breaking Bread}
-\author{Tommaso Ticci, Guillermo Caceres}
-\date{Aprile 2025}
 
-\renewcommand{\contentsname}{Indice}
+
+%\title{\textbf{Breaking Bread}}
+%\author{Tommaso Ticci, Guillermo Caceres}
+%\date{Aprile 2025}
+%\renewcommand{\contentsname}{Indice}
+
+
+
 
 \begin{document}
 
-\maketitle
-
-% Aggiungi logo
-\begin{figure}[h]
+\begin{titlepage}
     \centering
-    \includegraphics[width=0.5\textwidth]{imgs/Logo_unifi.jpg}
+    \includegraphics[width=0.4\textwidth]{imgs/Logo_unifi.jpg}\par\vspace{1cm}
+    {\Large \textsc{Università degli Studi di Firenze}}\\
+    {\large Dipartimento di Ingegneria dell'Informazione}\par\vspace{1cm}
+    \rule{\linewidth}{0.5mm} \\[0.4cm]
+    {\huge \textbf{Breaking Bread}}\\[0.2cm]
+    {\Large Software per la gestione di ordini di un Fast-Food}\\
+    \rule{\linewidth}{0.5mm} \\[1.5cm]
 
-    \label{fig:logo}
-\end{figure}
+    \begin{flushleft}
+        \textbf{Autori:}\\
+        Tommaso Ticci \hspace{2cm} Guillermo Caceres\\
+        \textbf{N. Matricola:} \\
+        7110440\hspace{3.3cm}7111172\\[1cm]
+        
+        \textbf{Corso:} Ingegneria del Software\\[0.5cm]
+        \textbf{Docente:} Enrico Vicario\\[0.5cm]
+        \textbf{Anno Accademico:} 2024/2025
+    \end{flushleft}
+\end{titlepage}
+
+
 
 \clearpage 
 
@@ -47,11 +65,11 @@ Programmi utilizzati:
     \item {\textbf{IntelliJ IDEA}}: IDE per la scrittura e compilazione del codice Java
     \item {\textbf{GitHub}}: piattaforma online per il versionamento e condivisione del codice
     \item {\textbf{StarUML}}: software per la creazione di vari diagrammi
-    \item {\textbf{Draw.io}}: web app per la creazione di vari diagrammiù
+    \item {\textbf{Draw.io}}: web app per la creazione di vari diagrammi
     \item {\textbf{Lunacy}}: software per la creazione di mock-ups
 \end{itemize}
 \\
-Durante la scrittura del codice sono state usate tecnologie generative AI come \textbf{GitHub Copilot}, utilizzate principalmente per la scrittura veloce di codice per la realizzazione di classi semplici. \\
+Durante la scrittura del codice sono state usate tecnologie generative AI come \textbf{GitHub Copilot}, utilizzate principalmente per la scrittura veloce di codice semplice e per la realizzazione di classi poco complesse. \\
 
 \begin{figure}[!h]
     \centering
@@ -211,7 +229,7 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                     %\bottomrule
                     \multicolumn{1}{l}{\rowcolor{grey!20} \textbf{Use Case \#4}} & \multicolumn{1}{l}{\textbf{Pagamento di un ordine}} \\
                     \bottomrule
-                    \rowcolor{white} \textbf{Brief Description} & L'utente effettua il pagamento dell'ordine nel carrello (MK\#05, TST#04) \\
+                    \rowcolor{white} \textbf{Brief Description} & L'utente effettua il pagamento dell'ordine nel carrello (MK\#05, TST\#04) \\
                     %\midrule
                     \rowcolor{blue!10} \textbf{Level} & Function \\
                     %\midrule
@@ -709,7 +727,7 @@ Questa classe si occupa di gestire il "Log in" permettendo l'accesso o la regist
 Lo scopo di questa classe è permettere agli utenti di gestire i propri ordini, sia quelli passati che quello corrente. La gestione è possibile grazie ai metodi: \texttt{addltem()}, \texttt{removeltem()}, \texttt{viewCurrentOrder()}, \texttt{confirmCurrentOrder()}, \\ \texttt{cancelCurrentOrder()}, \texttt{ViewOrders()}, \texttt{cancelOrder()} i quali agiscono solo su gli oridini correnti tranne per gli ultimi due che agiscono su ordini passati,
 
 \subsubsection{UserViewMenuController}
-Questa classe permette di visualizzare il menu, un lista di Item, e il menu delle offerte, una lista di Item selezionati fra quelli che hanno il campo "discountPercentage" diveso da zero.
+Questa classe permette di visualizzare il menu, una lista di Item, e il menu delle offerte, una lista di Item selezionati fra quelli che hanno il campo "discountPercentage" diveso da zero.
 
 \subsubsection{UserProfileController}
 Questa classe permette all'utente di controllare e gestire la prorpia area personale, aggiornado dati vecchi o gestendo metodi di pagamento, necessari per poter effettuare un ordine.
@@ -724,7 +742,7 @@ In questa area si permette all'utente admin di gestire tutti gli utenti registra
 Come la precedente classe anche questa è pensata per l'utente Admin, qui l'admin ha infatti la possibilità di gestire gli ordini degli utenti attraverso metodi come viewOrders() o cancelOrder().
 
 \subsubsection{AdminItemController}
-Questa classe come il nome suggerisce permette sempre all'utente Admin di gestire gli Item che che utenti comuni si ritroveranno nel menu.
+Questa classe come il nome suggerisce permette sempre all'utente Admin di gestire gli Item che gli utenti comuni si ritroveranno nel menu.
 
 
 
@@ -799,10 +817,15 @@ I file relativi al database sono contenuti in \texttt{src/main/sql} e sono:
 \end{itemize}
 
 \begin{figure}[h]
-    \includegraphics[width=0.9\linewidth]{imgs/snippets/Code_SQLReset.png}
+    \includegraphics[width=0.8\linewidth]{imgs/snippets/Code_SQLReset.png}
+    \centering
     \caption{Cancellazione di tutte le tabelle e creazione della tabella Users e PaymentMethod}
     \label{code_SQLReset}
 \end{figure}
+
+\subsection{Command Line Interface}
+E' stata sviluppata un’interfaccia a riga di comando per il sistema, il cui codice si trova nel file Main.java (percorso: \texttt{src/main/Main.java}). L’utente può interagire con il programma e accedere alle diverse funzionalità navigando tra le varie schermate tramite i comandi suggeriti dal sistema.
+
 
 \newpage
 
