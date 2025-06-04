@@ -71,10 +71,6 @@ public class AdminOrderControllerTest {
 
 
     @Test
-    void foo() throws SQLException, ClassNotFoundException {
-    }
-
-    @Test
     void CancelOrderTest() throws SQLException, ClassNotFoundException {
         adminOrderController.cancelOrder(orderId1,false);
         assertNull(orderDAO.getOrder(orderId1));

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UserManagerOrderControllerTest {
+public class  UserManagerOrderControllerTest {
     private UserManagerOrderController userManagerOrderController;
     private User user;
     private UserDAO userDAO;
