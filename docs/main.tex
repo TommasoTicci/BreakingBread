@@ -16,8 +16,6 @@
 %\renewcommand{\contentsname}{Indice}
 
 
-
-
 \begin{document}
 
 \begin{titlepage}
@@ -69,22 +67,26 @@ Programmi utilizzati:
     \item {\textbf{Lunacy}}: software per la creazione di mock-ups
 \end{itemize}
 \\
-Durante la scrittura del codice sono state usate tecnologie generative AI come \textbf{GitHub Copilot}, utilizzate principalmente per la scrittura veloce di codice semplice e per la realizzazione di classi poco complesse. \\
 
-\begin{figure}[!h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.9\linewidth]{imgs/PackageDependecy.png}
     \caption{Package Dependency}
     \label{PackageDependecy}
 \end{figure}
 
+\subsection{Utilizzo di Strumenti AI}
+Durante la scrittura del codice sono state usate tecnologie generative AI come \textbf{GitHub Copilot}, utilizzate principalmente per la scrittura veloce di codice semplice e per la realizzazione di classi poco complesse. \\
+
+
 \section{Progettazione}
 
 \subsection{Use Case Diagram}
-Come già detto la progettazione è stata realizzata con uno Use Case Diagram (figura \ref{useCaseDiagram}), dal quale si notano i ruoli dello "User" e del "Admin" e le operazioni che questi posso fare.
+La progettazione è stata realizzata con uno Use Case Diagram (figura \ref{useCaseDiagram}), dal quale si notano i ruoli dello "User" e del "Admin" e le operazioni che questi posso fare. I numeri presenti in alcuni nodi del grafico rappresentano il numero del template collegato a tale operazione.
 
 \begin{figure}[h]
-    \includegraphics[width=1.0\textwidth]{imgs/UseCaseDiagram.png}
+    \hspace*{-2.5cm}
+    \includegraphics[width=1.45\textwidth]{imgs/UseCaseDiagramVer2.png}
     \caption{Use Case Diagram}
     \label{useCaseDiagram}
 \end{figure}
@@ -98,8 +100,9 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[width=0.7\linewidth]{imgs/Test.png}
+    \includegraphics[width=0.75\linewidth]{imgs/Test.png}
     \caption{Test}
+    \centering
     \label{Test}
 \end{figure}
 
@@ -112,9 +115,9 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                 \small
                 \begin{tabularx}{\textwidth}{|lX|}
                     %\bottomrule
-                    \multicolumn{1}{l}{\rowcolor{grey!20} \textbf{Use Case \#1}} & \multicolumn{1}{l}{\textbf{Accesso al sistema}} \\
+                    \multicolumn{1}{l}{\rowcolor{grey!20} \textbf{Use Case \#1}} & \multicolumn{1}{l}{\textbf{Log In}} \\
                     \bottomrule
-                    \rowcolor{white} \textbf{Brief Description} & L'utente accede al sistema (MK\#01, TST\#01) \\
+                    \rowcolor{white} \textbf{Brief Description} & L'utente accede al sistema (MK\#01) \\
                     %\midrule
                     \rowcolor{blue!10} \textbf{Level} & User goal \\
                     %\midrule
@@ -127,12 +130,12 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                                                                 accesso
                                                                 \item [2.] L'utente preme il pulsante di conferma per accedere al sistema
                                                                 \item [3.] Il sistema controlla che le credenziali siano corrette e che ci sia corrispondenza sul database
-                                                                \item [4.] Il sistema autentica l'utente
+                                                                \item [4.] Il sistema autentica l'utente (TST\#01)
                                                             \end{description} \\
                      %\midrule
                     \rowcolor{blue!10} \textbf{Alternative Flows} & \begin{description}[nosep,before=\leavevmode\vspace*{-1\baselineskip},after=\leavevmode\vspace*{-1\baselineskip}]
                                                                         \item [3a.] Se le credenziali fornite sono errate, il sistema mostra un messaggio di errore all'utente
-                                                                        \item [4a.] Se a fare l'accesso è l'admin, il sistema lo reindirizza alla Admin Page (MK\#6)
+                                                                        \item [4a.] Se a fare l'accesso è l'admin, il sistema lo reindirizza alla Admin Page (MK\#06)
                                                                     \end{description} \\
                     %\midrule
                     \rowcolor{white} \textbf{Post-conditions} & L'utente ha accesso al sistema \\
@@ -141,7 +144,7 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                 \end{tabularx}
                 %}
                 %\captionsetup{font=small,labelfont=bf}
-                \caption{Use Case Template 1 (Accesso al sistema)}
+                \caption{Use Case Template 1 (Log In)}
                 \label{tab:use-case-template-1}
             \end{table}
 
@@ -151,9 +154,9 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                 \small
                 \begin{tabularx}{\textwidth}{|lX|}
                     %\bottomrule
-                    \multicolumn{1}{l}{\rowcolor{grey!20} \textbf{Use Case \#2}} & \multicolumn{1}{l}{\textbf{Registrazione al sistema}} \\
+                    \multicolumn{1}{l}{\rowcolor{grey!20} \textbf{Use Case \#2}} & \multicolumn{1}{l}{\textbf{Register}} \\
                     \bottomrule
-                    \rowcolor{white} \textbf{Brief Description} & L'utente crea un nuovo account e si registra al sistema (MK\#02, TST\#02) \\
+                    \rowcolor{white} \textbf{Brief Description} & L'utente crea un nuovo account e si registra al sistema (MK\#02) \\
                     %\midrule
                     \rowcolor{blue!10} \textbf{Level} & User goal \\
                     %\midrule
@@ -166,6 +169,7 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                                                                 \item [2.] L'utente preme il pulsante di conferma per registrarsi al sistema
                                                                 \item [3.] Il sistema controlla che i dati forniti siano corretti
                                                                 \item [4.] Il sistema registra il nuovo utente nel database
+                                                                (TST\#02)
                                                             \end{description} \\
                      %\midrule
                     \rowcolor{blue!10} \textbf{Alternative Flows} & \begin{description}[nosep,before=\leavevmode\vspace*{-1\baselineskip},after=\leavevmode\vspace*{-1\baselineskip}]
@@ -179,7 +183,7 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                 \end{tabularx}
                 %}
                 %\captionsetup{font=small,labelfont=bf}
-                \caption{Use Case Template 2 (Registrazione al sistema)}
+                \caption{Use Case Template 2 (Register)}
                 \label{tab:use-case-template-2}
             \end{table}
 
@@ -189,9 +193,9 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                 \small
                 \begin{tabularx}{\textwidth}{|lX|}
                     %\bottomrule
-                    \multicolumn{1}{l}{\rowcolor{grey!20} \textbf{Use Case \#3}} & \multicolumn{1}{l}{\textbf{Inserimento pietanza nel carrello}} \\
+                    \multicolumn{1}{l}{\rowcolor{grey!20} \textbf{Use Case \#3}} & \multicolumn{1}{l}{\textbf{Add Items to Cart}} \\
                     \bottomrule
-                    \rowcolor{white} \textbf{Brief Description} & L'utente inserisce una pietanza nel suo carrello (TST\#03) \\
+                    \rowcolor{white} \textbf{Brief Description} & L'utente inserisce una pietanza nel suo carrello \\
                     %\midrule
                     \rowcolor{blue!10} \textbf{Level} & User goal \\
                     %\midrule
@@ -203,7 +207,7 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                                                                 \item [1.] L'utente preme il pulsante "Add Item"
                                                                 \item [2.] L'utente digita l'id della pietanza che vuole aggiungere al carrello
                                                                 \item [3.] L'utente digita la quantità di tale pietanza
-                                                                \item [4.] Il sistema controlla i dati inseriti
+                                                                \item [4.] Il sistema controlla i dati inseriti (TST\#03)
                                                             \end{description} \\
                      %\midrule
                     \rowcolor{blue!10} \textbf{Alternative Flows} & \begin{description}[nosep,before=\leavevmode\vspace*{-1\baselineskip},after=\leavevmode\vspace*{-1\baselineskip}]
@@ -217,7 +221,7 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                 \end{tabularx}
                 %}
                 %\captionsetup{font=small,labelfont=bf}
-                \caption{Use Case Template 3 (Inserimento pietanza nel carrello)}
+                \caption{Use Case Template 3 (Add Items to Cart)}
                 \label{tab:use-case-template-3}
             \end{table}
 
@@ -227,9 +231,9 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                 \small
                 \begin{tabularx}{\textwidth}{|lX|}
                     %\bottomrule
-                    \multicolumn{1}{l}{\rowcolor{grey!20} \textbf{Use Case \#4}} & \multicolumn{1}{l}{\textbf{Pagamento di un ordine}} \\
+                    \multicolumn{1}{l}{\rowcolor{grey!20} \textbf{Use Case \#4}} & \multicolumn{1}{l}{\textbf{Pay Order}} \\
                     \bottomrule
-                    \rowcolor{white} \textbf{Brief Description} & L'utente effettua il pagamento dell'ordine nel carrello (MK\#05, TST\#04) \\
+                    \rowcolor{white} \textbf{Brief Description} & L'utente effettua il pagamento dell'ordine nel carrello (MK\#05) \\
                     %\midrule
                     \rowcolor{blue!10} \textbf{Level} & Function \\
                     %\midrule
@@ -241,7 +245,7 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                                                                 \item [1.] Il sistema mostra il riepilogo dell'ordine
                                                                 \item [2.] L'utente digita il CVV della carta collegata
                                                                 \item [3.] Il sistema verifica i dati ed esegue il pagamento
-                                                                \item [4.] Il sistema conferma all'utente che il pagamento è stato effettuato con successo
+                                                                \item [4.] Il sistema conferma all'utente che il pagamento è stato effettuato con successo (TST\#04)
                                                             \end{description} \\
                      %\midrule
                     \rowcolor{blue!10} \textbf{Alternative Flows} & \begin{description}[nosep,before=\leavevmode\vspace*{-1\baselineskip},after=\leavevmode\vspace*{-1\baselineskip}]
@@ -256,7 +260,7 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                 \end{tabularx}
                 %}
                 %\captionsetup{font=small,labelfont=bf}
-                \caption{Use Case Template 4 (Pagamento di un ordine)}
+                \caption{Use Case Template 4 (Pay Order)}
                 \label{tab:use-case-template-4}
             \end{table}
 
@@ -266,9 +270,9 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                 \small
                 \begin{tabularx}{\textwidth}{|lX|}
                     %\bottomrule
-                    \multicolumn{1}{l}{\rowcolor{grey!20} \textbf{Use Case \#5}} & \multicolumn{1}{l}{\textbf{Cancellazione di un ordine}} \\
+                    \multicolumn{1}{l}{\rowcolor{grey!20} \textbf{Use Case \#5}} & \multicolumn{1}{l}{\textbf{Cancel Order}} \\
                     \bottomrule
-                    \rowcolor{white} \textbf{Brief Description} & L'utente cancella un ordine dal sistema e riceve un rimborso (TST\#05) \\
+                    \rowcolor{white} \textbf{Brief Description} & L'utente cancella un ordine dal sistema e riceve un rimborso \\
                     %\midrule
                     \rowcolor{blue!10} \textbf{Level} & User goal \\
                     %\midrule
@@ -280,7 +284,7 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                                                                 \item [1.] L'utente digita l'id dell'ordine che vuole cancellare
                                                                 \item [2.] Il sistema verifica l'id inserito
                                                                 \item [3.] Il sistema effettua un rimborso all'utente
-                                                                \item [4.] Il sistema cancella l'ordine e comunica all'utente il successo di tale operazione
+                                                                \item [4.] Il sistema cancella l'ordine e comunica all'utente il successo di tale operazione (TST\#05)
                                                             \end{description} \\
                      %\midrule
                     \rowcolor{blue!10} \textbf{Alternative Flows} & \begin{description}[nosep,before=\leavevmode\vspace*{-1\baselineskip},after=\leavevmode\vspace*{-1\baselineskip}]
@@ -295,7 +299,7 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                 \end{tabularx}
                 %}
                 %\captionsetup{font=small,labelfont=bf}
-                \caption{Use Case Template 5 (Cancellazione di un ordine)}
+                \caption{Use Case Template 5 (Cancel Order)}
                 \label{tab:use-case-template-5}
             \end{table}
 
@@ -305,9 +309,9 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                 \small
                 \begin{tabularx}{\textwidth}{|lX|}
                     %\bottomrule
-                    \multicolumn{1}{l}{\rowcolor{grey!20} \textbf{Use Case \#6}} & \multicolumn{1}{l}{\textbf{Modifica della password}} \\
+                    \multicolumn{1}{l}{\rowcolor{grey!20} \textbf{Use Case \#6}} & \multicolumn{1}{l}{\textbf{Change Password}} \\
                     \bottomrule
-                    \rowcolor{white} \textbf{Brief Description} & L'utente modifica la propria password (TST\#06) \\
+                    \rowcolor{white} \textbf{Brief Description} & L'utente modifica la propria password \\
                     %\midrule
                     \rowcolor{blue!10} \textbf{Level} & User goal \\
                     %\midrule
@@ -321,7 +325,7 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                                                                 \item [3.] L'utente inserisce la nuova password
                                                                 \item [4.] L'utente inserisce la conferma della nuova password
                                                                 \item [5.] Il sistema controlla i dati inseriti
-                                                                \item [6.] Il sistema aggiorna la password dell'utente
+                                                                \item [6.] Il sistema aggiorna la password dell'utente  (TST\#06)
                                                             \end{description} \\
                      %\midrule
                     \rowcolor{blue!10} \textbf{Alternative Flows} & \begin{description}[nosep,before=\leavevmode\vspace*{-1\baselineskip},after=\leavevmode\vspace*{-1\baselineskip}]
@@ -334,7 +338,7 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                 \end{tabularx}
                 %}
                 %\captionsetup{font=small,labelfont=bf}
-                \caption{Use Case Template 6 (Modifica della password)}
+                \caption{Use Case Template 6 (Change Password)}
                 \label{tab:use-case-template-6}
             \end{table}
 
@@ -344,9 +348,9 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                 \small
                 \begin{tabularx}{\textwidth}{|lX|}
                     %\bottomrule
-                    \multicolumn{1}{l}{\rowcolor{grey!20} \textbf{Use Case \#7}} & \multicolumn{1}{l}{\textbf{Inserimento del metodo di pagamento}} \\
+                    \multicolumn{1}{l}{\rowcolor{grey!20} \textbf{Use Case \#7}} & \multicolumn{1}{l}{\textbf{Set Payment Method}} \\
                     \bottomrule
-                    \rowcolor{white} \textbf{Brief Description} & L'utente inserisce un metodo di pagamento nel sistema (TST\#07) \\
+                    \rowcolor{white} \textbf{Brief Description} & L'utente inserisce un metodo di pagamento nel sistema  \\
                     %\midrule
                     \rowcolor{blue!10} \textbf{Level} & User goal \\
                     %\midrule
@@ -359,7 +363,7 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                                                                 \item [2.] L'utente seleziona l'opzione per l'inserimento del metodo di pagamento
                                                                 \item [3.] L'utente inserisce i dati del suo metodo di pagamento
                                                                 \item [4.] Il sistema controlla i dati inseriti
-                                                                \item [5.] Il sistema associa il nuovo metodo di pagamento all'account dell'utente
+                                                                \item [5.] Il sistema associa il nuovo metodo di pagamento all'account dell'utente (TST\#07)
                                                             \end{description} \\
                      %\midrule
                     \rowcolor{blue!10} \textbf{Alternative Flows} & \begin{description}[nosep,before=\leavevmode\vspace*{-1\baselineskip},after=\leavevmode\vspace*{-1\baselineskip}]
@@ -373,7 +377,7 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                 \end{tabularx}
                 %}
                 %\captionsetup{font=small,labelfont=bf}
-                \caption{Use Case Template 7 (Inserimento del metodo di pagamento)}
+                \caption{Use Case Template 7 (Set Payment Method)}
                 \label{tab:use-case-template-7}
             \end{table}
 
@@ -383,7 +387,7 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                 \small
                 \begin{tabularx}{\textwidth}{|lX|}
                     %\bottomrule
-                    \multicolumn{1}{l}{\rowcolor{grey!20} \textbf{Use Case \#8}} & \multicolumn{1}{l}{\textbf{Aggiunta di nuova pietanza}} \\
+                    \multicolumn{1}{l}{\rowcolor{grey!20} \textbf{Use Case \#8}} & \multicolumn{1}{l}{\textbf{Add Item}} \\
                     \bottomrule
                     \rowcolor{white} \textbf{Brief Description} & L'admin aggiunge una nuova pietanza al menu (MK\#7) \\
                     %\midrule
@@ -411,7 +415,7 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                 \end{tabularx}
                 %}
                 %\captionsetup{font=small,labelfont=bf}
-                \caption{Use Case Template 8 (Aggiunta di una nuova pietanza)}
+                \caption{Use Case Template 8 (Add Item)}
                 \label{tab:use-case-template-8}
             \end{table}
 
@@ -421,7 +425,7 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                 \small
                 \begin{tabularx}{\textwidth}{|lX|}
                     %\bottomrule
-                    \multicolumn{1}{l}{\rowcolor{grey!20} \textbf{Use Case \#9}} & \multicolumn{1}{l}{\textbf{Modifica dello stato di un ordine}} \\
+                    \multicolumn{1}{l}{\rowcolor{grey!20} \textbf{Use Case \#9}} & \multicolumn{1}{l}{\textbf{Update Order Status}} \\
                     \bottomrule
                     \rowcolor{white} \textbf{Brief Description} & L'admin modifica lo stato di un ordine \\
                     %\midrule
@@ -449,7 +453,7 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                 \end{tabularx}
                 %}
                 %\captionsetup{font=small,labelfont=bf}
-                \caption{Use Case Template 9 (Modifica dello stato di un ordine)}
+                \caption{Use Case Template 9 (Update Order Status)}
                 \label{tab:use-case-template-9}
             \end{table}
 
@@ -459,7 +463,7 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                 \small
                 \begin{tabularx}{\textwidth}{|lX|}
                     %\bottomrule
-                    \multicolumn{1}{l}{\rowcolor{grey!20} \textbf{Use Case \#10}} & \multicolumn{1}{l}{\textbf{Reset del database}} \\
+                    \multicolumn{1}{l}{\rowcolor{grey!20} \textbf{Use Case \#10}} & \multicolumn{1}{l}{\textbf{Reset Database}} \\
                     \bottomrule
                     \rowcolor{white} \textbf{Brief Description} & L'admin effettua il ripristino del database \\
                     %\midrule
@@ -486,7 +490,7 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
                 \end{tabularx}
                 %}
                 %\captionsetup{font=small,labelfont=bf}
-                \caption{Use Case Template 10 (Reset del database)}
+                \caption{Use Case Template 10 (Reset Database)}
                 \label{tab:use-case-template-10}
             \end{table}
             \clearpage
@@ -497,6 +501,20 @@ Come già detto la progettazione è stata realizzata con uno Use Case Diagram (f
             \renewcommand{\arraystretch}{1}
 
     \vspace{1cm}
+
+\subsection{Navigation Diagram}
+Il diagramma di navigazione (figura \ref{navigationDiagram}) descrive la struttura dell'applicazione, suddividendo le funzionalità tra utenti e amministratori. Dalla schermata iniziale, gli utenti possono accedere, registrarsi o entrare come admin. L'area utente permette di visualizzare il menu, gestire il carrello, controllare ordini e modificare il profilo. Gli amministratori hanno accesso a strumenti per gestire utenti, modificare il menu, monitorare ordini e intervenire sul database. Ogni sezione include sempre la possibilità di tornare indietro, garantendo un flusso intuitivo. Il sistema è progettato per coprire l'intero ciclo degli ordini, dall'acquisto alla gestione amministrativa. I numeri scritti sopra le
+frecce corrispondono ai comandi da digitare tramite la CLI. Il numero \texttt{0} permette di ritornare alla pagina precedente o di chiudere il programma nel caso l'utente si trovi nella prima pagina (Breaking Bread).
+
+\begin{figure}[H]
+    \centering
+    \hspace*{-2.5cm}
+    \includegraphics[width=1.4\textwidth]{imgs/NavigationDiagram.png}%
+    \caption{Navigation Diagram}
+    \label{navigationDiagram}
+\end{figure}
+
+\newpage
 
 \subsection{Mockups}
 In seguito vengono mostrati alcuni Mockups dell'interfaccia del programma.
@@ -594,25 +612,25 @@ In seguito vengono mostrati alcuni Mockups dell'interfaccia del programma.
 
             
 \subsection{Class Diagram}
-Come già anticipato il progetto è strutturato in tre package, con lo scopo di separare le respnsabilità e seguire il principio "Separation of Concerns", l'obiettivo è di avere un codice mantenibile e più facilmente testabile.
+Il progetto è strutturato in tre packages, con lo scopo di separare le respnsabilità e seguire il principio "Separation of Concerns", l'obiettivo è di avere un codice mantenibile e più facilmente testabile.
 
 \subsubsection{Domain Model}
-Il livello Domain Model ha lo scopo di rappresentare le entità principali (figura \ref{domainModel}), definendo per ognuna i propri attributi e i metodi strettamente legati alla classe, come nel caso del PaymentMethod.
+Il livello Domain Model ha la responsabilità di rappresentare le entità principali (figura \ref{domainModel}), definendo per ognuna i propri attributi e i metodi strettamente legati alla classe, come nel caso del PaymentMethod.
 
 \subsubsection{Business Logic}
-La Business Logic rappresentata nello (figura \ref{business_logic}) gestisce il comportamento principale del sistema, separando le funzioni tra utenti e amministratori. Il suo scopo è coordinare le operazioni legate a ordini, gestione del profilo, autenticazione, visualizzazione del menu/offerte, e operazioni amministrative come la gestione del database, utenti, ordini e articoli. In sostanza, definisce le regole e i processi chiave che guidano il funzionamento dell'applicazione.
+La Business Logic (figura \ref{business_logic}) gestisce il comportamento principale del sistema, separando le funzioni tra utenti e amministratori. La sua responsabilità è coordinare le operazioni legate a ordini, gestione del profilo, autenticazione, visualizzazione del menu/offerte, e operazioni amministrative come la gestione del database, utenti, ordini e articoli. In sostanza, definisce le regole e i processi chiave che guidano il funzionamento dell'applicazione. I vari Controller presenti nella Buisness Logic sono divisi per Utilizzatore e per Pagina (esempio: UserManageOrderController è un Controller che gestisce la pagina di gestione degli ordini utilizzata da un Utente). 
 
 \clearpage
 
 \subsubsection{ORM}
-Il livello ORM (figura \ref{orm}) ha lo scopo di gestire l’interazione tra l’applicazione e il database. Fornisce metodi per accedere, salvare, modificare ed eliminare dati riguardanti utenti, ordini, articoli, metodi di pagamento e amministratori. Utilizza un singleton chiamato ConnectionManager per garantire una gestione centralizzata e sicura della connessione al database. In sintesi, questo livello traduce gli oggetti del dominio in dati persistenti nel database e viceversa.
+Il livello ORM (figura \ref{orm}) ha la responsabilità di gestire l’interazione tra l’applicazione e il database. Fornisce metodi per accedere, salvare, modificare ed eliminare dati riguardanti utenti, ordini, articoli, metodi di pagamento e amministratori. Utilizza un singleton chiamato ConnectionManager per garantire una gestione centralizzata e sicura della connessione al database. In sintesi, questo livello traduce gli oggetti del dominio in dati persistenti nel database e viceversa.
 
 %todo mettere domainModel
 % ATTENZIONE c'è confusione
 
    \begin{figure}[h]
         \centering
-        \includegraphics[width=1.0\textwidth]{imgs/DomainModel.png}
+        \includegraphics[width=1.0\textwidth]{imgs/DomainModelVer2.png}
         \caption{Domain Model}
         \label{domainModel}
     \end{figure}
@@ -633,7 +651,7 @@ Il livello ORM (figura \ref{orm}) ha lo scopo di gestire l’interazione tra l�
 \clearpage
 
 \subsection{ER Diagram}
-La progettazione del database è stata realizzata attraverso uno schema concettuale ER (Entity-Relationship), mostrato nello (figura \ref{er}). In questo diagramma sono  raffigurate tutte le entità principali del sistema e le relative relazioni. Lo schema rappresenta la struttura logica del database prima della successiva fase di implementazione fisica in PostgreSQL, per la quale abbiamo invece usato uno schema relazionale (figura \ref{RelationalModel}).
+La progettazione del database è stata realizzata attraverso uno schema concettuale ER (Entity-Relationship, figura \ref{er}). In questo diagramma sono raffigurate tutte le entità principali del sistema e le relative relazioni. Lo schema rappresenta la struttura logica del database prima della successiva fase di implementazione "fisica" in PostgreSQL, per la quale abbiamo invece usato uno schema relazionale (figura \ref{RelationalModel}).
 
 \vspace{1cm}
 
@@ -649,17 +667,6 @@ La progettazione del database è stata realizzata attraverso uno schema concettu
     \includegraphics[width=1.0\linewidth]{imgs/RelationalModel.png}
     \caption{Relational Model}
     \label{RelationalModel}
-\end{figure}
-
-\newpage
-
-\subsection{Navigation Diagram}
-Il diagramma di navigazione (figura \ref{navigationDiagram}) descrive la struttura dell'applicazione, suddividendo le funzionalità tra utenti e amministratori. Dalla schermata iniziale, gli utenti possono accedere, registrarsi o entrare come admin. L'area utente permette di visualizzare il menu, gestire il carrello, controllare ordini e modificare il profilo. Gli amministratori hanno accesso a strumenti per gestire utenti, modificare il menu, monitorare ordini e intervenire sul database. Ogni sezione include sempre la possibilità di tornare indietro, garantendo un flusso intuitivo. Il sistema è progettato per coprire l'intero ciclo degli ordini, dall'acquisto alla gestione amministrativa.
-
-\begin{figure}[h]
-    \includegraphics[width=1.0\linewidth]{imgs/NavigationDiagram.png}
-    \caption{Navigation Diagram}
-    \label{navigationDiagram}
 \end{figure}
 
 \newpage
@@ -688,14 +695,13 @@ Le principali sono:
 
 \subsection{Domain Model}
 \subsubsection{User}
-La classe "User" rappresenta l'entità utente, definito sugli attributi: id (univoco per ogni utete), name, surname, username, age, sex, email, password, paymentMethod(riferimento alla classe amonima), cart (ArrayList contente id degli item).
+La classe "User" rappresenta l'entità utente, definito sugli attributi: id (univoco per ogni utete), name, surname, username, age, sex, email, password, paymentMethod (riferimento alla classe omonima), cart (ArrayList contente id degli item).
 
 \subsubsection{Item}
-La classe "Item" rappresenta l'entita pietanza, definita sugli attributi: itemld (univoco per ogni pietanza), name, type, description, prizediscountPercentage.
+La classe "Item" rappresenta l'entita pietanza, definita sugli attributi: itemld (univoco per ogni pietanza), name, type, description, price e discountPercentage.
 
 \subsubsection{PaymentMethod}
-La classe "PaymentMethod" rappresenta il metodo di pagamento, in questo caso una carta di credito. Definita sugli attributi: ownerName, ownerSurname, cardNumber, cardExpirationDate,
-cardCVV, withheld. Questa classe implementa i metodi : 
+La classe "PaymentMethod" rappresenta il metodo di pagamento, in questo caso una carta di credito. E' definita sugli attributi: ownerName, ownerSurname, cardNumber, cardExpirationDate, cardCVV, withheld. Questa classe implementa i metodi : 
 
 \begin{itemize}
     \item \texttt{pay()} il quale prende fra i parametri un riferimento a "order" da cui ricava la il costro totale dell'ordine e si accerta che vengano inseriti correttamente dall'utente i codici per validare il pagamento.
@@ -704,7 +710,7 @@ cardCVV, withheld. Questa classe implementa i metodi :
 \end{itemize}
 
 \subsubsection{Order}
-La classe "Order" rappresenta un ordine, è definito sugli attributi: orderld(univoco per ogni ordine), status, user, Date, items(ArrayList di "Item"),
+La classe "Order" rappresenta un ordine, è definito sugli attributi: orderld(univoco per ogni ordine), status, user, date e items(ArrayList di "Item"). La classe "Order" realizza un design pattern Mapper, il quale ha la responsabilità di mappare un User con molteplici Item presenti nel suo ordine.
 
 \subsubsection{Order Factory}
 La classe OrderFactory offre un metodo statico \texttt{createOrder()} per generare oggetti Order già validati, controllando che tutti i parametri richiesti (ID, utente, prodotti, stato e data) siano presenti. Questo approccio standardizza la creazione degli ordini (figura \ref{orderFactory})
@@ -721,10 +727,10 @@ La classe OrderFactory offre un metodo statico \texttt{createOrder()} per genera
 \subsection{Business Logic}
 
 \subsubsection{LogInController}
-Questa classe si occupa di gestire il "Log in" permettendo l'accesso o la registrazione a utenti comuni, mentre garantisce l'accesso all'admin alla sua area riservata
+Questa classe si occupa di gestire il "Log in" permettendo l'accesso o la registrazione a utenti comuni, mentre garantisce l'accesso all'admin alla sua area riservata.
 
 \subsubsection{UserManageOrderController}
-Lo scopo di questa classe è permettere agli utenti di gestire i propri ordini, sia quelli passati che quello corrente. La gestione è possibile grazie ai metodi: \texttt{addltem()}, \texttt{removeltem()}, \texttt{viewCurrentOrder()}, \texttt{confirmCurrentOrder()}, \\ \texttt{cancelCurrentOrder()}, \texttt{ViewOrders()}, \texttt{cancelOrder()} i quali agiscono solo su gli oridini correnti tranne per gli ultimi due che agiscono su ordini passati,
+Il compito di questa classe è permettere agli utenti di gestire i propri ordini, sia quelli passati che quello corrente. La gestione è possibile grazie ai metodi: \texttt{addltem()}, \texttt{removeltem()}, \texttt{viewCurrentOrder()}, \texttt{confirmCurrentOrder()}, \\ \texttt{cancelCurrentOrder()}, \texttt{ViewOrders()}, \texttt{cancelOrder()} i quali agiscono solo su gli oridini correnti tranne per gli ultimi due che agiscono su ordini passati,
 
 \subsubsection{UserViewMenuController}
 Questa classe permette di visualizzare il menu, una lista di Item, e il menu delle offerte, una lista di Item selezionati fra quelli che hanno il campo "discountPercentage" diveso da zero.
@@ -733,16 +739,16 @@ Questa classe permette di visualizzare il menu, una lista di Item, e il menu del
 Questa classe permette all'utente di controllare e gestire la prorpia area personale, aggiornado dati vecchi o gestendo metodi di pagamento, necessari per poter effettuare un ordine.
 
 \subsubsection{AdminDatabaseOptionsController}
-la AdminDatabaseOptionsController permette all'utente Admin di gestire le propri credenziali o di svuotare il database.
+La AdminDatabaseOptionsController permette all'utente Admin di gestire le proprie credenziali o di svuotare il database.
 
 \subsubsection{AdminUserControl}
-In questa area si permette all'utente admin di gestire tutti gli utenti registrati alla applicazione. Qui l'utente Admin ha la possibilità di avere una lsita di tutti gli utenti, grazie al metodo viewUsers().
+In questa area si permette all'utente admin di gestire tutti gli utenti registrati alla applicazione. Qui l'utente Admin ha la possibilità di avere una lista di tutti gli utenti, grazie al metodo \texttt{viewUsers()}.
 
 \subsubsection{Admin Order Controller}
-Come la precedente classe anche questa è pensata per l'utente Admin, qui l'admin ha infatti la possibilità di gestire gli ordini degli utenti attraverso metodi come viewOrders() o cancelOrder().
+Come la precedente classe anche questa è pensata per l'utente Admin, qui l'Admin ha infatti la possibilità di gestire gli ordini degli utenti attraverso metodi come \texttt{viewOrders()}, \texttt{updateOrderStatus()} o \texttt{cancelOrder()}.
 
 \subsubsection{AdminItemController}
-Questa classe come il nome suggerisce permette sempre all'utente Admin di gestire gli Item che gli utenti comuni si ritroveranno nel menu.
+Questa classe, come il nome suggerisce, permette sempre all'utente Admin di gestire gli Item che gli utenti possono ordinare dal menu.
 
 
 
@@ -817,20 +823,22 @@ I file relativi al database sono contenuti in \texttt{src/main/sql} e sono:
 \end{itemize}
 
 \begin{figure}[h]
-    \includegraphics[width=0.8\linewidth]{imgs/snippets/Code_SQLReset.png}
+    \includegraphics[width=0.9\linewidth]{imgs/snippets/Code_SQLReset.png}
     \centering
     \caption{Cancellazione di tutte le tabelle e creazione della tabella Users e PaymentMethod}
     \label{code_SQLReset}
 \end{figure}
 
+\newpage
+
 \subsection{Command Line Interface}
-E' stata sviluppata un’interfaccia a riga di comando per il sistema, il cui codice si trova nel file Main.java (percorso: \texttt{src/main/Main.java}). L’utente può interagire con il programma e accedere alle diverse funzionalità navigando tra le varie schermate tramite i comandi suggeriti dal sistema.
+E' stata sviluppata un’interfaccia a riga di comando per il sistema, il cui codice si trova nel file \texttt{Main.java} (percorso: \texttt{src/main/Main.java}). L’utente può interagire con il programma e accedere alle diverse funzionalità navigando tra le varie schermate tramite i comandi numerati suggeriti dal sistema. Il codice presente nel file \texttt{Main.java} reindirizza l'utente nelle varie pagine a seconda dell'input inserito tramite vari switch-case.
 
 
 \newpage
 
 \section{Testing}
-Dato che il progetto è strutturato in tre package, anche il testing segue questa pratica, i test sono infatti divisi in package: DomainModelTest, BusinessLogicTest, manca a questo proposito un ORMTest, la cui mancaza è dovuta a che già nella BusinessLogicTest se ne fa un ampio testing. 
+Il progetto è divisio in tre packages e per ciascuno di questi abbiamo implementato delle classi incaricate di svolgere test sul programma. Le classi di test sono: DomainModelTest, BusinessLogicTest e ORMTest.
 
 
 \subsection{BusinessLogicTest}
@@ -839,7 +847,7 @@ Di seguito sono riportati i test della Business Logic, in viola sono riportati i
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[width=0.3\linewidth]{imgs/BusinessLogicTest.png}
+    \includegraphics[width=0.4\linewidth]{imgs/BusinessLogicTest.png}
     \caption{BusinessLogicTest}
     \label{BusinessLogicTest}
 \end{figure}
@@ -847,7 +855,7 @@ Di seguito sono riportati i test della Business Logic, in viola sono riportati i
 Tutte le classi di test implementano un un metodo \texttt{setUp()} e uno \texttt{tearDown()}, questo con lo scopo di mettere i metodi effettivi di test nelle condizioni e con le risose adeguate per verificare il codice. In modo particoalare la \texttt{setUp()} si occupa di allocare gli oggetti e aggiungere occorenze nel database da testare, mentre la \texttt{tearDown()} rimuove dal database le occorenze usate nei test (figura \ref{SetUP-TearDown}).\\ Questo lo si fa per lasciare intonzo il database dopo l'esecusione dei test.
 
 
-\begin{figure}[!h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1.0\linewidth]{imgs/snippets/SetUp-TearDown.png}
     \caption{Esempio Uso SetUP, TearDown}
@@ -855,7 +863,7 @@ Tutte le classi di test implementano un un metodo \texttt{setUp()} e uno \texttt
 \end{figure}
 
 Di seguito sono mostrati i test della LoginControllertest, nei quali
-si verifica il corretto fuzionamento dei metodi \texttt{login()} e \texttt{register()} della classe LoginController (figura \ref{LoginControllertest}). Nella  (figura \ref{AdminUserControllerTest}) è invece riportato il test effettuato sulla classe AdminUserController, nella quale si verficano i metodi \texttt{removeUser()} e \texttt{serachUser()}
+si verifica il corretto fuzionamento dei metodi \texttt{login()} e \texttt{register()} della classe LoginController (figura \ref{LoginControllertest}). Nella  figura \ref{AdminUserControllerTest} è invece riportato il test effettuato sulla classe AdminUserController, nella quale si verficano i metodi \texttt{removeUser()} e \texttt{serachUser()}
 
 
 \begin{figure}[!h]
@@ -877,25 +885,41 @@ si verifica il corretto fuzionamento dei metodi \texttt{login()} e \texttt{regis
 
 
 \subsection{DomainModelTest}
-Anche il package DomainModel è stato testato, Con lo scopo di verificarne la correttezza, sono stati eseguiti i seguenti test (figura \ref{DomainModelTest}), i test si sono concentrati sulle classi Order e PaymentMethod dato che queste fra le classi del DomainModel sono quelle che impelmentano metodi e che quindi corrono il rischio di danneggiarsi.
+La classe DomainModelTest ha il compito di effettuare test relativi alle classi del DomainModel. Sono stati eseguiti i seguenti test (figura \ref{DomainModelTest}), i quali si concentrano particolarmente sulle classi Order e PaymentMethod dato che queste sono le uniche (nel DomainModel) ad avere metodi più complessi oltre a getters e setters.
 
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[width=0.3\linewidth]{imgs/snippets/DomainModelTest.png}
+    \includegraphics[width=0.5\linewidth]{imgs/snippets/DomainModelTest.png}
     \caption{DomainModelTest}
     \label{DomainModelTest}
 \end{figure}
 
-A seguire sono rirportati alcuni dei test sulla classe "Order", in (figura \ref{OrderTest}) sono riportati i test : \texttt{testGetTotal()}, \texttt{testGetTotalWithEmptyItems()}, \texttt{testGetTotalWithSingleItem()}.
+A seguire sono rirportati alcuni dei test sulla classe "Order". In figura \ref{OrderTest} sono riportati i test: \texttt{testGetTotal()}, \texttt{testGetTotalWithEmptyItems()}, \texttt{testGetTotalWithSingleItem()}.
 
-\begin{figure}[!h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1.0\linewidth]{imgs/snippets/OrderTest.png}
     \caption{OrderTest}
     \label{OrderTest}
 \end{figure}
 
+\subsection{ORMTest}
+Il package ORMTest si occupa di effettuare i test sulle classi contenute nel package ORM. Sebbene alcuni metodi siano già stati testati in modo indiretto nel package BusinessLogicTest, è stato comunque deciso, per completezza, di creare un package di test dedicato.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\linewidth]{imgs/snippets/Code_ItemDAOTest.png}
+    \caption{ItemDAOTest}
+    \label{ItemDAOTest}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\linewidth]{imgs/snippets/Code_OrderDAOTest.png}
+    \caption{OrderDAOTest}
+    \label{OrderDAOTest}
+\end{figure}
+
+
 \end{document}
-
-
